@@ -2,7 +2,7 @@ import unittest
 
 from yearsinpixels_business.Entity.User import User
 
-from yearsinpixels_data.QueryObject.Criteria import MatchCriteria
+from yearsinpixels_data.QueryObject.Criteria.MatchCriteria import MatchCriteria
 
 
 class MatchCriteriaTest(unittest.TestCase):

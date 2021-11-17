@@ -1,7 +1,7 @@
 import unittest
 
 from yearsinpixels_data.Repository.Repository import Repository
-from yearsinpixels_data.Repository import UserRepository
+from yearsinpixels_data.Repository.UserRepository import UserRepository
 
 
 class UserRepositoryTest(unittest.TestCase):

@@ -1,7 +1,6 @@
 import unittest
 
-from yearsinpixels_data.QueryObject import QueryObject
-
+from yearsinpixels_data.QueryObject.QueryObject import QueryObject
 
 
 class QueryObjectTest(unittest.TestCase):
