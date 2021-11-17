@@ -1,6 +1,7 @@
-.idea/
+/.idea
 !/.idea/runConfigurations
 
+/build
 /dist
 /venv
 yearsinpixels_data.egg-info
