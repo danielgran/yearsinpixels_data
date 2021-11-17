@@ -14,8 +14,6 @@ class MatchCriteriaTest(unittest.TestCase):
         self.assertIsNotNone(self.criteria)
 
     def test_generate_sql(self):
-        sql = self.criteria.generate_SQL()
+        sql = self.criteria.generate_sql()
         self.assertTrue(isinstance(sql, str))
-
-        r = User()
-
+        self.assertEqual(sql, "`field` = 'value'")

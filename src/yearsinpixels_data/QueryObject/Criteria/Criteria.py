@@ -1,8 +1,8 @@
 class Criteria:
-    def __init__(self, a,b):
+    def __init__(self, field, value):
         self.operator = ""
-        self.field = ""
-        self.value = ""
+        self.field = field
+        self.value = value
 
     def generateSQL(self):
         pass
