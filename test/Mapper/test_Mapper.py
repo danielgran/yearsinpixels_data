@@ -1,6 +1,6 @@
 import unittest
 
-from yearsinpixels_data.Mapper import Mapper
+from yearsinpixels_data.Mapper.Mapper import Mapper
 
 
 class MapperTest(unittest.TestCase):
@@ -11,4 +11,4 @@ class MapperTest(unittest.TestCase):
         self.assertIsNotNone(Mapper)
 
     def test_check_metadata(self):
-        self.assertIsNotNone(self.mapper.queryobject)
+        self.assertIsNotNone(self.mapper.database_strategy)
