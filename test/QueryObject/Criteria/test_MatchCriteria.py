@@ -13,6 +13,9 @@ class MatchCriteriaTest(unittest.TestCase):
         self.assertIsNotNone(MatchCriteria)
         self.assertIsNotNone(self.criteria)
 
+    def test_integrity(self):
+        self.assertEqual(self.criteria.operator, "=")
+
     def test_generate_sql(self):
         sql = self.criteria.generate_sql()
         self.assertTrue(isinstance(sql, str))

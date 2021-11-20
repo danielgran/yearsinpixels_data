@@ -1,6 +1,7 @@
 class Criteria:
-    def __init__(self, field, value):
-        self.operator = ""
+    def __init__(self, field, value, operator=None):
+        if operator is not None:
+            self.operator = operator
         self.field = field
         self.value = value
 
