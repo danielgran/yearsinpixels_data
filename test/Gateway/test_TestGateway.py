@@ -24,7 +24,13 @@ class TestGatewayTest(unittest.TestCase):
     def test_read(self):
         entity = User()
         self.gateway.create_entity(entity)
-        self.assertTrue(self.gateway.read_entity(entity) == entity)
+        self.assertTrue(self.gateway.read_entity(entity) == entity, "Can not find added entity.")
+
+    def test_read_with_meta(self):
+        entity = User()
+        entity.name_last = "Peter"
+        entity_from_gateway = self.gateway.read_entity(entity, field="name_last", value=entity.name_last)
+        self.assertEqual(entity.name_last == entity_from_gateway.name_last)
 
     def test_update(self):
         entity = User()
