@@ -4,6 +4,7 @@ from yearsinpixels_business.Entity.User import User
 
 from yearsinpixels_data.Gateway.Gateway import Gateway
 from yearsinpixels_data.Gateway.TestGateway import TestGateway
+from yearsinpixels_data.QueryObject.Criteria.MatchCriteria import MatchCriteria
 
 
 class TestGatewayTest(unittest.TestCase):
@@ -29,8 +30,10 @@ class TestGatewayTest(unittest.TestCase):
     def test_read_with_meta(self):
         entity = User()
         entity.name_last = "Peter"
-        entity_from_gateway = self.gateway.read_entity(entity, field="name_last", value=entity.name_last)
-        self.assertEqual(entity.name_last == entity_from_gateway.name_last)
+        self.gateway.create_entity(entity)
+        matchcriteria = MatchCriteria("name_last", entity.name_last)
+        entity_from_gateway = self.gateway.read_entity(entity, matchcriteria)
+        self.assertEqual(entity.name_last, entity_from_gateway.name_last)
 
     def test_update(self):
         entity = User()

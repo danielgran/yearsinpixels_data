@@ -1,3 +1,4 @@
+import copy
 import unittest
 
 from yearsinpixels_business.Entity.User import User
@@ -26,19 +27,33 @@ class MapperTest(unittest.TestCase):
         user = User()
         user.email = "some@nice.liame"
         self.mapper.add(user)
-        # lacking check
+        self.assertTrue(user in self.mapper.gateway.items)
 
     def test_find(self):
         user = User()
         user.name_first = "Programmer Jeff"
         self.mapper.gateway.items.append(user)
-        user_from_mapper = self.mapper.find(MatchCriteria('name', user.name_first))
+        criteria = MatchCriteria('name_first', user.name_first)
+        user_from_mapper = self.mapper.find(criteria)
         self.assertEqual(user.name_first, user_from_mapper.name_first)
 
     def test_update(self):
-        user = self.mapper.find(User, MatchCriteria("name", "daniel"))
+        user = User()
+        user.name_first = "Programmer Jeff"
+        self.mapper.gateway.items.append(copy.deepcopy(user))
+
         replace_email = "test@the.email"
         user.email = replace_email
-        self.mapper.update(User, user)
-        user = self.mapper.find(User, MatchCriteria("name", "daniel"))
-        self.assertEqual(user.email, replace_email)
+
+        self.mapper.update(user)
+
+        self.assertTrue(self.mapper.gateway.items[0].email, replace_email)
+
+    def test_remove(self):
+        user = User()
+        user.name_first = "Programmer Jeff"
+        self.mapper.gateway.items.append(copy.deepcopy(user))
+        self.assertTrue(len(self.mapper.gateway.items) == 1)
+
+        self.mapper.remove(user)
+        self.assertTrue(user not in self.mapper.gateway.items)
