@@ -1,5 +1,4 @@
 from yearsinpixels_data.Gateway.TestGateway import TestGateway
-from yearsinpixels_data.QueryObject.SelectQuery import SelectQuery
 
 
 class Mapper:
