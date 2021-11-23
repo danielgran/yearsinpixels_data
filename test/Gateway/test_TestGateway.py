@@ -55,3 +55,6 @@ class TestGatewayTest(unittest.TestCase):
         updated_entity = self.gateway.read_entity(entity)
 
         self.assertIsNone(updated_entity)
+
+        import sys
+        print(sys.path)

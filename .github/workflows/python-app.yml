@@ -21,6 +21,11 @@ jobs:
       with:
         python-version: 3.9
 
+    - name: Edit Pythonpath
+      run: |
+        echo "::set-env name=PYTHONPATH::home/runner/work/yearsinpixels_data/src/*"
+        echo "::set-env name=PYTHONPATH::home/runner/work/yearsinpixels_data/test"
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
