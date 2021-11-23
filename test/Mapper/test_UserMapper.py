@@ -4,17 +4,17 @@ import unittest
 from yearsinpixels_business.Entity.User import User
 
 from yearsinpixels_data.Gateway.TestGateway import TestGateway
-from yearsinpixels_data.Mapper.Mapper import Mapper
+from yearsinpixels_data.Mapper.UserMapper import UserMapper
 from yearsinpixels_data.QueryObject.Criteria.MatchCriteria import MatchCriteria
 
 
-class MapperTest(unittest.TestCase):
+class UserMapperTest(unittest.TestCase):
     def setUp(self):
         test_gateway = TestGateway()
-        self.mapper = Mapper(test_gateway)
+        self.mapper = UserMapper(test_gateway)
 
     def test_is_there(self):
-        self.assertIsNotNone(Mapper)
+        self.assertIsNotNone(UserMapper)
 
     def test_metadata(self):
         self.assertIsNotNone(self.mapper.gateway)

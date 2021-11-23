@@ -1,7 +1,7 @@
 from yearsinpixels_data.Gateway.TestGateway import TestGateway
 
 
-class Mapper:
+class UserMapper:
 
     def __init__(self, gateway):
         self.gateway = gateway
