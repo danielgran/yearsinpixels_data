@@ -27,6 +27,7 @@ class MapperTest(unittest.TestCase):
         user = User()
         user.email = "some@nice.liame"
         self.mapper.add(user)
+
         self.assertTrue(user in self.mapper.gateway.items)
 
     def test_find(self):
@@ -35,16 +36,15 @@ class MapperTest(unittest.TestCase):
         self.mapper.gateway.items.append(user)
         criteria = MatchCriteria('name_first', user.name_first)
         user_from_mapper = self.mapper.find(criteria)
+
         self.assertEqual(user.name_first, user_from_mapper.name_first)
 
     def test_update(self):
         user = User()
         user.name_first = "Programmer Jeff"
         self.mapper.gateway.items.append(copy.deepcopy(user))
-
         replace_email = "test@the.email"
         user.email = replace_email
-
         self.mapper.update(user)
 
         self.assertTrue(self.mapper.gateway.items[0].email, replace_email)
@@ -54,6 +54,6 @@ class MapperTest(unittest.TestCase):
         user.name_first = "Programmer Jeff"
         self.mapper.gateway.items.append(copy.deepcopy(user))
         self.assertTrue(len(self.mapper.gateway.items) == 1)
-
         self.mapper.remove(user)
+
         self.assertTrue(user not in self.mapper.gateway.items)
