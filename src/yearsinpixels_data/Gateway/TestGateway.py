@@ -5,7 +5,6 @@ class TestGateway(Gateway):
     def __init__(self):
         self.items = list()
 
-
     def create_entity(self, entity):
         self.items.append(entity)
 
@@ -33,4 +32,3 @@ class TestGateway(Gateway):
         for iter in range(len(self.items)):
             if entity.guid == self.items[iter].guid:
                 del(self.items[iter])
-
