@@ -22,8 +22,6 @@ jobs:
         python-version: 3.9
 
     - name: Edit Pythonpath
-      env:
-        ACTIONS_ALLOW_UNSECURE_COMMANDS = 'true'
       run: |
         echo "::set-env name=PYTHONPATH::home/runner/work/yearsinpixels_data/src/*"
         echo "::set-env name=PYTHONPATH::home/runner/work/yearsinpixels_data/test"
