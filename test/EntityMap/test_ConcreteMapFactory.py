@@ -5,10 +5,6 @@ from yearsinpixels_business.Entity.User import User
 from yearsinpixels_data.EntityMap.ConcreteEntityMapFactory import ConcreteEntityMapFactory
 
 
-class Day:
-    pass
-
-
 class ConcreteMapFactoryTest(unittest.TestCase):
     def test_is_there(self):
         self.assertIsNotNone(ConcreteEntityMapFactory)
