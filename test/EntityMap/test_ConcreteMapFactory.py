@@ -17,9 +17,8 @@ class ConcreteMapFactoryTest(unittest.TestCase):
         self.assertIsNotNone(ConcreteEntityMapFactory.construct)
 
     def test_behaviour(self):
-        to_test=[User]
+        classes=[User]
 
-        for entity in to_test:
-            entity_object = entity()
-            entity_map = ConcreteEntityMapFactory.construct(entity_object)
+        for entity_class in classes:
+            entity_map = ConcreteEntityMapFactory.construct(entity_class)
             self.assertIsNotNone(entity_map)

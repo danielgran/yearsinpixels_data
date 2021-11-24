@@ -7,5 +7,6 @@ class ConcreteEntityMapFactory:
 
     @staticmethod
     def construct(classtype):
-        if type(classtype) is User:
+        print(type(classtype))
+        if classtype is User:
             return UserMap()

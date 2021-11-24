@@ -10,9 +10,8 @@ class EntityRegistryTest(unittest.TestCase):
         self.assertIsNotNone(EntityRegistry)
 
     def test_meta(self):
-        self.assertIsNotNone(EntityRegistry.get_common_name_from_entity)
+        self.assertIsNotNone(EntityRegistry.get_common_name_from_class)
 
     def test_registry_entities(self):
-
-        name = EntityRegistry.get_common_name_from_entity(User)
+        name = EntityRegistry.get_common_name_from_class(User)
         self.assertTrue(isinstance(name, str) and len(name) > 0)

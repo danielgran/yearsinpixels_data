@@ -2,7 +2,7 @@ import unittest
 from abc import ABC
 
 from yearsinpixels_data.EntityMap.EntityMap import EntityMap
-from yearsinpixels_data.EntityMap.EntityRegistry import UserMap
+from yearsinpixels_data.EntityMap.UserMap import UserMap
 
 
 class EntityMapTest(unittest.TestCase):
