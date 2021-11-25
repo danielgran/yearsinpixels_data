@@ -16,22 +16,16 @@ class MySQLGateway(Gateway):
         self.connection = None
 
     def connect(self):
-        success = False
         try:
             self.connection = connect(user=self.username, password=self.password, host=self.host, port=self.port, database=self.database)
-            success = True
         except:
-            success = False
-        return success
+            raise
 
     def disconnect(self):
-        success = False
         try:
             self.connection.disconnect()
-            success = True
         except:
-            success = False
-        return success
+            raise
 
     def create_entity(self, entity):
         pass

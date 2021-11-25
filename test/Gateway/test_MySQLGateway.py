@@ -31,10 +31,8 @@ class MySQLGatewayTest(unittest.TestCase):
         self.assertTrue(issubclass(MySQLGateway, Gateway))
 
     def test_connect(self):
-        success = self.gateway.connect()
-        self.assertTrue(success, "Connecting to the database has failed.")
+        self.gateway.connect()
 
     def test_disconnect(self):
         self.gateway.connect()
-        success = self.gateway.disconnect()
-        self.assertTrue(success)
+        self.gateway.disconnect()
