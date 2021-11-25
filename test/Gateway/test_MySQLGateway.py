@@ -14,16 +14,15 @@ try:
 except:
     skip = True
 
-@unittest.skipIf(skip, "MySQL support will not work on this system. Use the 'yearsinpixels_data.Gateway.TestGateway'.")
+@unittest.skipIf(skip, "MySQL support will not work on this system. Use the 'yearsinpixels_data.Gateway.TestGateway' package.")
 class MySQLGatewayTest(unittest.TestCase):
-    def SetUp(self):
+    def setUp(self):
         username = "root"
         password = "somepass"
         host = "localhost"
         port = 3306
         database = "yearsinpixels"
-        connection = mysql.connector.connect(user=username, password=password, host=host, port=port, database=database)
-
+        self.gateway = MySQLGateway(username=username, password=password, host=host, port=port, database=database)
 
     def test_is_there(self):
         self.assertIsNotNone(MySQLGateway)
@@ -31,33 +30,11 @@ class MySQLGatewayTest(unittest.TestCase):
     def test_is_gateway(self):
         self.assertTrue(issubclass(MySQLGateway, Gateway))
 
-
-
-    def test_construct(self):
-        username = "root"
-        password = "somepass"
-        host = "localhost"
-        port = 3306
-        database = "yearsinpixels"
-        MySQLGateway(username=username, password=password, host=host, port=port, database=database)
-
     def test_connect(self):
-        username = "root"
-        password = "somepass"
-        host = "localhost"
-        port = 3306
-        database = "yearsinpixels"
-        gateway = MySQLGateway(username=username, password=password, host=host, port=port, database=database)
-        success = gateway.connect()
+        success = self.gateway.connect()
+        self.assertTrue(success, "Connecting to the database has failed.")
 
     def test_disconnect(self):
-        username = "root"
-        password = "somepass"
-        host = "localhost"
-        port = 3306
-        database = "yearsinpixels"
-        gateway = MySQLGateway(username=username, password=password, host=host, port=port, database=database)
-        success = gateway.connect()
-        self.assertTrue(success)
-        success = gateway.disconnect()
+        self.gateway.connect()
+        success = self.gateway.disconnect()
         self.assertTrue(success)
