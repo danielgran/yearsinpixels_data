@@ -34,8 +34,8 @@ class UserMap(EntityMap):
         return "password"
 
     @property
-    def password_lastupdate(self):
-        return "password_lastupdate"
+    def last_update_password(self):
+        return "last_update_password"
 
     @property
     def enabled(self):
