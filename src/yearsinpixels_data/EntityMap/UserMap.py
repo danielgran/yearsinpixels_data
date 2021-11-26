@@ -6,6 +6,10 @@ class UserMap(EntityMap):
         return "user"
 
     @property
+    def guid(self):
+        return "guid"
+
+    @property
     def email(self):
         return "email"
 
