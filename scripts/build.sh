@@ -1,5 +1,5 @@
 #!/bin/zsh
-# This file must get called out of the project root
+# This file must get called out of the project root.
 
 python3 -m pip install --upgrade pip
 
