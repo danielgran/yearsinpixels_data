@@ -15,5 +15,5 @@ class UserMapTest(unittest.TestCase):
             if var.startswith("_") or var.startswith("get"):
                 continue
 
-            return_value_from_property = getattr(usermap, var)
-            self.assertTrue(isinstance(return_value_from_property, str) and len(return_value_from_property) > 0)
+            data_pair_from_property = getattr(usermap, var)
+            self.assertTrue(isinstance(data_pair_from_property.field_name, str) and len(data_pair_from_property.field_name) > 0)
