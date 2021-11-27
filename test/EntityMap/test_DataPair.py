@@ -1,6 +1,7 @@
 import unittest
 
 from yearsinpixels_data.EntityMap.DataPair import DataPair
+from yearsinpixels_data.EntityMap.Datatype import Datatype
 
 
 class DataPairTest(unittest.TestCase):
@@ -8,6 +9,10 @@ class DataPairTest(unittest.TestCase):
         self.assertTrue(self.assertIsNotNone(DataPair))
 
     def test_construction(self):
-        datapair = DataPair()
+        datatype = Datatype.INTEGER
+        field_name = "some_field_name"
+        datapair = DataPair(datatype, field_name)
+        self.assertEqual(datapair.datatype, datatype)
+        self.assertEqual(datapair.field_name, field_name)
 
 
