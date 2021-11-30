@@ -1,5 +1,9 @@
 import unittest
 
+from yearsinpixels_data.EntityMap.DatatypeBoolean import DatatypeBoolean
+from yearsinpixels_data.EntityMap.DatatypeDatetime import DatatypeDatetime
+from yearsinpixels_data.EntityMap.DatatypeInteger import DatatypeInteger
+from yearsinpixels_data.EntityMap.DatatypeString import DatatypeString
 from yearsinpixels_data.EntityMap.MySQLDatatypeBoolean import MySQLDatatypeBoolean
 from yearsinpixels_data.EntityMap.MySQLDatatypeDatetime import MySQLDatatypeDatetime
 from yearsinpixels_data.EntityMap.MySQLDatatypeInteger import MySQLDatatypeInteger
@@ -18,3 +22,10 @@ class MySQLDatatypeMapTest(unittest.TestCase):
         self.assertEqual(MySQLDatatypeBoolean, dtmap.boolean)
         self.assertEqual(MySQLDatatypeString, dtmap.string)
         self.assertEqual(MySQLDatatypeDatetime, dtmap.datetime)
+
+    def test_get_func(self):
+        dtmap = MySQLDatatypeMap()
+        self.assertEqual(MySQLDatatypeInteger, dtmap.get_mysql_type(DatatypeInteger))
+        self.assertEqual(MySQLDatatypeBoolean, dtmap.get_mysql_type(DatatypeBoolean))
+        self.assertEqual(MySQLDatatypeString, dtmap.get_mysql_type(DatatypeString))
+        self.assertEqual(MySQLDatatypeDatetime, dtmap.get_mysql_type(DatatypeDatetime))

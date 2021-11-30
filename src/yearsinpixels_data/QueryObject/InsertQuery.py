@@ -1,4 +1,5 @@
 from yearsinpixels_data.EntityMap.ConcreteEntityMapFactory import ConcreteEntityMapFactory
+from yearsinpixels_data.EntityMap.MySQLDatatypeMap import MySQLDatatypeMap
 from yearsinpixels_data.QueryObject.QueryObject import QueryObject
 
 
@@ -8,27 +9,28 @@ class InsertQuery(QueryObject):
         self.entity = entity
         self.type = type(entity)
 
-
     def generate_sql(self):
         sql_code = "INSERT INTO "
         entity_map = ConcreteEntityMapFactory.construct(self.type)
         sql_map = self.merge_entity_with_datamap(self.entity, entity_map)
 
-        print(2)
-
         sql_code += str(entity_map.get_common_name())
         sql_code += " ("
-        for field in dir(self.entity):
-            if field.startswith("_"): continue
-            sql_code += f"{field}, "
+        for datapair in sql_map:
+            sql_code += f"{datapair.field_name}, "
+
         # Delete the last two characters ', ' from the sql code.
         sql_code = sql_code[:len(sql_code) - 2]
-        sql_code += ") "
-        sql_code += "VALUES"
-        sql_code += " ("
-        for field in dir(self.entity):
-            if field.startswith("_"): continue
-            sql_code += f"'{getattr(self.entity, field)}', "
+
+        sql_code += ") VALUES ( "
+
+        for datapair in sql_map.keys():
+            mysql_datatype = MySQLDatatypeMap().get_mysql_type(datapair.datatype)
+            mysql_datatype = mysql_datatype()
+            value = sql_map.get(datapair)
+            value = mysql_datatype.convert_to_database(value)
+            sql_code += f"'{value}', "
+
         # Delete the last two characters ', ' from the sql code.
         sql_code = sql_code[:len(sql_code) - 2]
         sql_code += ");"

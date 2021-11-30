@@ -1,4 +1,3 @@
-import time
 from datetime import datetime
 
 from yearsinpixels_data.EntityMap.DatatypeDatetime import DatatypeDatetime

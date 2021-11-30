@@ -21,5 +21,4 @@ class CreateQueryTest(unittest.TestCase):
         user = User()
         query = InsertQuery(user).generate_sql()
 
-
         self.assertTrue(query.startswith("INSERT"))
