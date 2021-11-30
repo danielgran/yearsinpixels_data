@@ -1,5 +1,7 @@
 import unittest
 
+from yearsinpixels_business.Entity.User import User
+
 from yearsinpixels_data.EntityMap.EntityMap import EntityMap
 from yearsinpixels_data.EntityMap.UserMap import UserMap
 
@@ -16,4 +18,5 @@ class UserMapTest(unittest.TestCase):
                 continue
 
             data_pair_from_property = getattr(usermap, var)
+            self.assertTrue(var in dir(User()))
             self.assertTrue(isinstance(data_pair_from_property.field_name, str) and len(data_pair_from_property.field_name) > 0)

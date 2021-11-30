@@ -30,7 +30,7 @@ class MySQLGateway(Gateway):
     def create_entity(self, entity):
         pass
 
-    def read_entity(self, entity, criteria=None) -> Entity:
+    def read_entity(self, entity, criteria) -> Entity:
         pass
 
     def update_entity(self, entity):

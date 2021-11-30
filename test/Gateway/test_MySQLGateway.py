@@ -1,11 +1,12 @@
 import unittest
 
+from yearsinpixels_business.Entity.User import User
+
+from yearsinpixels_data.EntityMap.UserMap import UserMap
 from yearsinpixels_data.Gateway.Gateway import Gateway
 from yearsinpixels_data.Gateway.MySQLGateway import MySQLGateway
+from yearsinpixels_data.QueryObject.Criteria.MatchCriteria import MatchCriteria
 
-
-
-skip = None
 try:
     import mysql.connector
     connection = mysql.connector.connect(user='root', database='yearsinpixels', password='somepass')
@@ -30,9 +31,42 @@ class MySQLGatewayTest(unittest.TestCase):
     def test_is_gateway(self):
         self.assertTrue(issubclass(MySQLGateway, Gateway))
 
-    def test_connect(self):
-        self.gateway.connect()
-
-    def test_disconnect(self):
+    def test_connectivity(self):
         self.gateway.connect()
         self.gateway.disconnect()
+
+    def test_create_entity(self):
+        self.gateway.connect()
+
+        user = User()
+
+        self.gateway.create_entity(user)
+
+        field = UserMap().guid.field_name
+        criteria = MatchCriteria(field, user.guid)
+        self.assertIsNotNone(self.gateway.read_entity(user, criteria))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
