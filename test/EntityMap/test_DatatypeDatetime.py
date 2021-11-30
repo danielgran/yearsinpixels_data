@@ -2,8 +2,7 @@ import unittest
 from abc import ABC
 
 from yearsinpixels_data.EntityMap.Datatype import Datatype
-from yearsinpixels_data.EntityMap.DatatypeInteger import DatatypeInteger
-from yearsinpixels_data.EntityMap.DatatypeString import DatatypeBoolean
+from yearsinpixels_data.EntityMap.DatatypeDatetime import DatatypeDatetime
 
 
 class DatatypeIntegerTest(unittest.TestCase):

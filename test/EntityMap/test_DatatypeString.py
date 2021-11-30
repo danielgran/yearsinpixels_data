@@ -2,7 +2,7 @@ import unittest
 from abc import ABC
 
 from yearsinpixels_data.EntityMap.Datatype import Datatype
-from yearsinpixels_data.EntityMap.DatatypeDatetime import DatatypeString
+from yearsinpixels_data.EntityMap.DatatypeString import DatatypeString
 
 
 class DatatypeStringTest(unittest.TestCase):

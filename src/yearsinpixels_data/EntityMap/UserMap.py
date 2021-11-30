@@ -1,6 +1,10 @@
-from yearsinpixels_data.EntityMap.DataPair import DataPair
+from yearsinpixels_data.EntityMap.Datapair import Datapair
 from yearsinpixels_data.EntityMap.Datatype import Datatype
+from yearsinpixels_data.EntityMap.DatatypeBoolean import DatatypeBoolean
+from yearsinpixels_data.EntityMap.DatatypeDatetime import DatatypeDatetime
+from yearsinpixels_data.EntityMap.DatatypeString import DatatypeString
 from yearsinpixels_data.EntityMap.EntityMap import EntityMap
+
 
 
 class UserMap(EntityMap):
@@ -9,52 +13,52 @@ class UserMap(EntityMap):
 
     @property
     def guid(self):
-        return DataPair(Datatype.STRING, "guid")
+        return Datapair(DatatypeString, "guid")
 
     @property
     def email(self):
-        return DataPair(Datatype.STRING, "email")
+        return Datapair(DatatypeString, "email")
 
     @property
     def email_verified(self):
-        return DataPair(Datatype.BOOLEAN, "email_verified")
+        return Datapair(DatatypeBoolean, "email_verified")
 
     @property
     def name_first(self):
-        return DataPair(Datatype.STRING, "name_first")
+        return Datapair(DatatypeString, "name_first")
 
     @property
     def name_last(self):
-        return DataPair(Datatype.STRING, "name_last")
+        return Datapair(DatatypeString, "name_last")
 
     @property
     def gender(self):
-        return DataPair(Datatype.STRING, "gender")
+        return Datapair(DatatypeString, "gender")
 
     @property
     def password(self):
-        return DataPair(Datatype.STRING, "password")
+        return Datapair(DatatypeString, "password")
 
     @property
     def password_last_update(self):
-        return DataPair(Datatype.DATETIME, "password_last_update")
+        return Datapair(DatatypeDatetime, "password_last_update")
 
     @property
     def enabled(self):
-        return DataPair(Datatype.BOOLEAN, "enabled")
+        return Datapair(DatatypeBoolean, "enabled")
 
     @property
     def twofatoken(self):
-        return DataPair(Datatype.STRING, "twofatoken")
+        return Datapair(DatatypeString, "twofatoken")
 
     @property
     def login_last(self):
-        return DataPair(Datatype.DATETIME, "login_last")
+        return Datapair(DatatypeDatetime, "login_last")
 
     @property
     def modified(self):
-        return DataPair(Datatype.DATETIME, "modified")
+        return Datapair(DatatypeDatetime, "modified")
 
     @property
     def created(self):
-        return DataPair(Datatype.DATETIME, "created")
+        return Datapair(DatatypeDatetime, "created")
