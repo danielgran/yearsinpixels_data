@@ -2,6 +2,7 @@ from mysql.connector import connect
 from yearsinpixels_business.Entity.Entity import Entity
 
 from yearsinpixels_data.Gateway.Gateway import Gateway
+from yearsinpixels_data.QueryObject.InsertQuery import InsertQuery
 
 
 class MySQLGateway(Gateway):
@@ -28,6 +29,11 @@ class MySQLGateway(Gateway):
             raise
 
     def create_entity(self, entity):
+        query = InsertQuery(entity).generate_sql()
+        cursor = self.connection.cursor()
+        cursor.execute(query)
+        self.connection.commit()
+        cursor.close()
         pass
 
     def read_entity(self, entity, criteria) -> Entity:
