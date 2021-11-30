@@ -1,8 +1,12 @@
-from enum import Enum
+from abc import ABC, abstractmethod
 
 
-class Datatype(Enum):
-    INTEGER = 1
-    STRING = 2
-    BOOLEAN = 3
-    DATETIME = 4
+class Datatype(ABC):
+
+    @abstractmethod
+    def convert_to_database(self, element):
+        pass
+
+    @abstractmethod
+    def convert_from_database(self, element):
+        pass

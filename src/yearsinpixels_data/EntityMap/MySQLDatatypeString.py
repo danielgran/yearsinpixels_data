@@ -1,7 +1,7 @@
-from yearsinpixels_data.EntityMap.Datatype import Datatype
+from yearsinpixels_data.EntityMap.DatatypeString import DatatypeString
 
 
-class MySQLDatatypeString(Datatype):
+class MySQLDatatypeString(DatatypeString):
     def convert_to_database(self, element):
         is_integer = isinstance(element, str)
         if not is_integer:

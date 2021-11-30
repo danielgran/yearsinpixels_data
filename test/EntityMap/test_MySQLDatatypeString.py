@@ -1,7 +1,7 @@
 import unittest
 
+from yearsinpixels_data.EntityMap.DatatypeString import DatatypeString
 from yearsinpixels_data.EntityMap.MySQLDatatypeString import MySQLDatatypeString
-from yearsinpixels_data.EntityMap.Datatype import Datatype
 
 
 class MySQLDatatypeStringTest(unittest.TestCase):
@@ -9,7 +9,7 @@ class MySQLDatatypeStringTest(unittest.TestCase):
         self.assertIsNotNone(MySQLDatatypeString)
 
     def test_is_datatype(self):
-        self.assertTrue(issubclass(MySQLDatatypeString, Datatype))
+        self.assertTrue(issubclass(MySQLDatatypeString, DatatypeString))
 
     def test_convert_to_database(self):
         value = "This shuld be converted to the database"

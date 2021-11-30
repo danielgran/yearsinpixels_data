@@ -1,6 +1,6 @@
 import unittest
 
-from yearsinpixels_data.EntityMap.Datatype import Datatype
+from yearsinpixels_data.EntityMap.DatatypeInteger import DatatypeInteger
 from yearsinpixels_data.EntityMap.MySQLDatatypeInteger import MySQLDatatypeInteger
 
 
@@ -9,7 +9,7 @@ class MySQLDatatypeIntegerTest(unittest.TestCase):
         self.assertIsNotNone(MySQLDatatypeInteger)
 
     def test_is_datatype(self):
-        self.assertTrue(issubclass(MySQLDatatypeInteger, Datatype))
+        self.assertTrue(issubclass(MySQLDatatypeInteger, DatatypeInteger))
 
     def test_convert_to_database(self):
         integer = 99999999999999999
