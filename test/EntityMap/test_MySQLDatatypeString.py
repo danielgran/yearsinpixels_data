@@ -23,4 +23,5 @@ class MySQLDatatypeStringTest(unittest.TestCase):
 
 
     def test_convert_from_database(self):
-        pass
+        string = "This is a string for testing purposes"
+        self.assertEqual(string, MySQLDatatypeString().convert_from_database(string))
