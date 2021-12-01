@@ -1,7 +1,6 @@
 from yearsinpixels_business.Entity.Entity import Entity
 
 from yearsinpixels_data.EntityMap.ConcreteEntityMapFactory import ConcreteEntityMapFactory
-from yearsinpixels_data.QueryObject.Criteria.Criteria import Criteria
 from yearsinpixels_data.QueryObject.QueryObject import QueryObject
 
 

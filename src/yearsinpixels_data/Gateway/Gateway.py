@@ -9,7 +9,7 @@ class Gateway(ABC):
         pass
 
     @abstractmethod
-    def read_entity(self, entity, criteria=None) -> Entity:
+    def read_entity(self, query_object) -> Entity:
         pass
 
     @abstractmethod

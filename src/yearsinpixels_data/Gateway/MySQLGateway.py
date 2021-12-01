@@ -1,6 +1,8 @@
 from mysql.connector import connect
 from yearsinpixels_business.Entity.Entity import Entity
 
+from yearsinpixels_data.EntityMap.ConcreteEntityMapFactory import ConcreteEntityMapFactory
+from yearsinpixels_data.EntityMap.MySQLDatatypeMap import MySQLDatatypeMap
 from yearsinpixels_data.Gateway.Gateway import Gateway
 from yearsinpixels_data.QueryObject.InsertQuery import InsertQuery
 
@@ -18,7 +20,8 @@ class MySQLGateway(Gateway):
 
     def connect(self):
         try:
-            self.connection = connect(user=self.username, password=self.password, host=self.host, port=self.port, database=self.database)
+            self.connection = connect(user=self.username, password=self.password, host=self.host, port=self.port,
+                                      database=self.database)
         except:
             raise
 
@@ -34,16 +37,31 @@ class MySQLGateway(Gateway):
         cursor.execute(query)
         self.connection.commit()
         cursor.close()
-        pass
 
-    def read_entity(self, entity, criteria) -> Entity:
-        pass
+    def read_entity(self, query_object) -> Entity:
+
+        query = query_object.generate_sql()
+        cursor = self.connection.cursor(dictionary=True)
+        cursor.execute(query)
+
+        entity_map = ConcreteEntityMapFactory().construct(query_object.entity)
+        constructed_entity = query_object.entity()
+
+        for entity in cursor:
+            for field in entity.keys():
+                field_name_from_database = field
+                value_from_database = entity[field_name_from_database]
+                datapair = getattr(entity_map, field_name_from_database)
+                sql_datatype = MySQLDatatypeMap().get_mysql_type(datapair.datatype)()
+                converted_value = sql_datatype.convert_from_database(value_from_database)
+                setattr(constructed_entity, datapair.field_name, converted_value)
+            break  # Only the first entity
+        cursor.close()
+
+        return constructed_entity
 
     def update_entity(self, entity):
         pass
 
     def delete_entity(self, entity):
         pass
-
-
-
