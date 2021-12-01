@@ -12,5 +12,6 @@ class MySQLDatatypeDatetime(DatatypeDatetime):
         time = element.strftime('%Y-%m-%d %H:%M:%S')
         return str(time)
 
-    def convert_from_database(self, element):
-        pass
+    def convert_from_database(self, date_time):
+        if not isinstance(date_time, datetime): raise Exception
+        return date_time

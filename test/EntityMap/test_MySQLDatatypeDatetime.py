@@ -23,4 +23,10 @@ class MySQLDatatypeDatetimeTest(unittest.TestCase):
             MySQLDatatypeDatetime().convert_to_database("This should fail.")
 
     def test_convert_from_database(self):
-        pass
+        datetime_now = datetime.now()
+        self.assertEqual(datetime_now, MySQLDatatypeDatetime().convert_from_database(datetime_now))
+
+    def test_convert_from_database_detect_wrong_data(self):
+        self.assertRaises(Exception, MySQLDatatypeDatetime().convert_to_database, 2)
+        self.assertRaises(Exception, MySQLDatatypeDatetime().convert_to_database, 11)
+        self.assertRaises(Exception, MySQLDatatypeDatetime().convert_to_database, "asdf")
