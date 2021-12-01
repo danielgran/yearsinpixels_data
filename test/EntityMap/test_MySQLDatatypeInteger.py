@@ -22,4 +22,5 @@ class MySQLDatatypeIntegerTest(unittest.TestCase):
 
 
     def test_convert_from_database(self):
-        pass
+        integer = 123
+        self.assertEqual(integer, MySQLDatatypeInteger().convert_from_database(123))

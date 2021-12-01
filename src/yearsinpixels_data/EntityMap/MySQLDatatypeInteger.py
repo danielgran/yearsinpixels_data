@@ -9,4 +9,4 @@ class MySQLDatatypeInteger(DatatypeInteger):
         return str(element)
 
     def convert_from_database(self, element):
-        pass
+        return element
