@@ -2,12 +2,11 @@ import unittest
 
 from yearsinpixels_data.EntityMap.DatatypeBoolean import DatatypeBoolean
 from yearsinpixels_data.EntityMap.MySQLDatatypeBoolean import MySQLDatatypeBoolean
-from yearsinpixels_data.EntityMap.MySQLDatatypeInteger import MySQLDatatypeInteger
 
 
-class MySQLDatatypeIntegerTest(unittest.TestCase):
+class MySQLDatatypeBooleanTest(unittest.TestCase):
     def test_is_there(self):
-        self.assertIsNotNone(MySQLDatatypeInteger)
+        self.assertIsNotNone(MySQLDatatypeBoolean)
 
     def test_is_datatype(self):
         self.assertTrue(issubclass(MySQLDatatypeBoolean, DatatypeBoolean))
@@ -23,4 +22,14 @@ class MySQLDatatypeIntegerTest(unittest.TestCase):
             MySQLDatatypeBoolean().convert_to_database("asdf")
 
     def test_convert_from_database(self):
-        pass
+        true_value_from_database = 1
+        false_value_from_database = 0
+        self.assertEqual(True, MySQLDatatypeBoolean().convert_from_database(true_value_from_database))
+        self.assertEqual(False, MySQLDatatypeBoolean().convert_from_database(false_value_from_database))
+
+
+    def test_convert_from_database_detect_wrong_data(self):
+
+        self.assertRaises(Exception, MySQLDatatypeBoolean().convert_to_database, 2)
+        self.assertRaises(Exception, MySQLDatatypeBoolean().convert_to_database, 11)
+        self.assertRaises(Exception, MySQLDatatypeBoolean().convert_to_database, "asdf")
