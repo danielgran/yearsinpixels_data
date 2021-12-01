@@ -1,5 +1,7 @@
-/.idea
-!/.idea/runConfigurations
+.idea
+!.idea/runConfigurations
+
+__pycache__
 
 /build
 /dist
