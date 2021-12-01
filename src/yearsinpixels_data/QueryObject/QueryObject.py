@@ -9,6 +9,6 @@ class QueryObject(ABC):
     def generate_sql(self):
         pass
 
-    def addCriteria(self, criteria):
+    def add_criteria(self, criteria):
         self.criteria.append(criteria)
 

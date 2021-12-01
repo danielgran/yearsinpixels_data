@@ -25,7 +25,7 @@ class QueryObjectTest(unittest.TestCase):
 
     def test_add_criteria(self):
         criteria = Criteria.matches("user", "daniel")
-        self.queryObject.addCriteria(criteria)
+        self.queryObject.add_criteria(criteria)
         self.assertTrue(criteria in self.queryObject.criteria)
 
 
