@@ -75,3 +75,23 @@ class MySQLGatewayTest(unittest.TestCase):
             string += field + str(getattr(entity, field))
         #return string
         return md5(bytes(string, encoding='utf8'))
+
+    def test_update_entity(self):
+        user = User()
+        user.email = "this.email@didnotgetupdat.edu"
+
+        for field in dir(user):
+            if isinstance(getattr(user, field), datetime):
+                setattr(user, field, getattr(user, field).replace(microsecond=0))
+        self.gateway.create_entity(user)
+
+        update_query = UpdateQuery()
+
+
+
+
+
+
+
+
+

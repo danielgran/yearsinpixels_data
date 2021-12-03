@@ -1,8 +1,6 @@
 from yearsinpixels_data.EntityMap.Datapair import Datapair
-from yearsinpixels_data.EntityMap.Datatype import Datatype
 from yearsinpixels_data.EntityMap.DatatypeBoolean import DatatypeBoolean
 from yearsinpixels_data.EntityMap.DatatypeDatetime import DatatypeDatetime
-from yearsinpixels_data.EntityMap.DatatypeInteger import DatatypeInteger
 from yearsinpixels_data.EntityMap.DatatypeString import DatatypeString
 from yearsinpixels_data.EntityMap.EntityMap import EntityMap
 
