@@ -7,8 +7,12 @@ from yearsinpixels_data.EntityMap.EntityMap import EntityMap
 
 
 class UserMap(EntityMap):
+
     def get_common_name(self):
         return "user"
+
+    def get_primary_identifier_field(self):
+        return self.guid
 
     @property
     def guid(self):

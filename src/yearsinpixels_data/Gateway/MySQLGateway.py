@@ -4,7 +4,9 @@ from yearsinpixels_business.Entity.Entity import Entity
 from yearsinpixels_data.EntityMap.ConcreteEntityMapFactory import ConcreteEntityMapFactory
 from yearsinpixels_data.EntityMap.MySQLDatatypeMap import MySQLDatatypeMap
 from yearsinpixels_data.Gateway.Gateway import Gateway
+from yearsinpixels_data.QueryObject.Criteria.Criteria import Criteria
 from yearsinpixels_data.QueryObject.InsertQuery import InsertQuery
+from yearsinpixels_data.QueryObject.UpdateQuery import UpdateQuery
 
 
 class MySQLGateway(Gateway):
@@ -61,7 +63,19 @@ class MySQLGateway(Gateway):
         return constructed_entity
 
     def update_entity(self, entity):
-        pass
+        business_object_class = type(entity)
+        entity_map = ConcreteEntityMapFactory.construct(business_object_class)
+        primary_identifier_name = entity_map.get_primary_identifier_field().field_name
+
+        update_query = UpdateQuery(business_object_class)
+        update_query.add_criteria(Criteria.matches(primary_identifier_name, getattr(entity, primary_identifier_name)))
+        update_query.set_update_object(entity)
+
+        query = update_query.generate_sql()
+
+        cursor = self.connection.cursor()
+        cursor.execute(query)
+        cursor.close()
 
     def delete_entity(self, entity):
         pass

@@ -2,7 +2,6 @@ import unittest
 from abc import ABC
 
 from yearsinpixels_data.EntityMap.EntityMap import EntityMap
-from yearsinpixels_data.EntityMap.UserMap import UserMap
 
 
 class EntityMapTest(unittest.TestCase):
@@ -12,3 +11,4 @@ class EntityMapTest(unittest.TestCase):
 
     def test_meta(self):
         self.assertIsNotNone(EntityMap.get_common_name)
+        self.assertIsNotNone(EntityMap.get_primary_identifier_field)

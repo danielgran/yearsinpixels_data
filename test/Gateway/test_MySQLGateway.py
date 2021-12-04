@@ -6,10 +6,10 @@ from hashlib import md5
 from yearsinpixels_business.Entity.User import User
 from yearsinpixels_data.Gateway.Gateway import Gateway
 from yearsinpixels_data.Gateway.MySQLGateway import MySQLGateway
+from yearsinpixels_data.QueryObject.Criteria.Criteria import Criteria
 from yearsinpixels_data.QueryObject.Criteria.MatchCriteria import MatchCriteria
 from yearsinpixels_data.QueryObject.SelectQuery import SelectQuery
-
-
+from yearsinpixels_data.QueryObject.UpdateQuery import UpdateQuery
 
 try:
     import mysql.connector
@@ -73,20 +73,29 @@ class MySQLGatewayTest(unittest.TestCase):
         for field in dir(entity):
             if field.startswith("_"): continue
             string += field + str(getattr(entity, field))
-        #return string
         return md5(bytes(string, encoding='utf8'))
 
     def test_update_entity(self):
         user = User()
-        user.email = "this.email@didnotgetupdat.edu"
+        unique = uuid.uuid4()
+        user.email = f"this.email@didnotgetupdat.edu-{unique}"
 
         for field in dir(user):
             if isinstance(getattr(user, field), datetime):
                 setattr(user, field, getattr(user, field).replace(microsecond=0))
         self.gateway.create_entity(user)
 
-        update_query = UpdateQuery()
+        user.email = f"this.email@was.updated-{unique}"
+        self.gateway.update_entity(user)
 
+        select = SelectQuery(User)
+        select.add_criteria(Criteria.matches("guid", user.guid))
+        user_from_database = self.gateway.read_entity(select)
+
+        hash_entity_database = self.hash_entity(user_from_database)
+        hash_entity_local = self.hash_entity(user)
+
+        self.assertTrue(hash_entity_local.hexdigest() == hash_entity_database.hexdigest())
 
 
 
