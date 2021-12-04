@@ -9,21 +9,28 @@ from yearsinpixels_data.Gateway.MySQLGateway import MySQLGateway
 from yearsinpixels_data.QueryObject.Criteria.Criteria import Criteria
 from yearsinpixels_data.QueryObject.Criteria.MatchCriteria import MatchCriteria
 from yearsinpixels_data.QueryObject.SelectQuery import SelectQuery
-from yearsinpixels_data.QueryObject.UpdateQuery import UpdateQuery
 
 try:
     import mysql.connector
 
     connection = mysql.connector.connect(user='root', database='yearsinpixels', password='somepass')
     connection.close()
-    skip = False
+    disable_testcase = False
 except:
-    skip = True
+    disable_testcase = True
 
 
-@unittest.skipIf(skip,
+@unittest.skipIf(disable_testcase,
                  "MySQL support will not work on this system. Use the 'yearsinpixels_data.Gateway.TestGateway' package.")
 class MySQLGatewayTest(unittest.TestCase):
+    @staticmethod
+    def hash_entity(entity):
+        string = ""
+        for field in dir(entity):
+            if field.startswith("_"): continue
+            string += field + str(getattr(entity, field))
+        return md5(bytes(string, encoding='utf8')).hexdigest()
+
     def setUp(self):
         username = "root"
         password = "somepass"
@@ -39,13 +46,12 @@ class MySQLGatewayTest(unittest.TestCase):
     def test_is_gateway(self):
         self.assertTrue(issubclass(MySQLGateway, Gateway))
 
-    def test_connectivity(self):
+    def test_disconnect(self):
         self.gateway.disconnect()
 
     def test_create_entity(self):
         user = User()
         user.email = str(uuid.uuid4())
-
         self.gateway.create_entity(user)
 
     def test_read_entity(self):
@@ -63,17 +69,10 @@ class MySQLGatewayTest(unittest.TestCase):
         select_query.add_criteria(MatchCriteria("guid", user.guid))
         user_from_database = self.gateway.read_entity(select_query)
 
-        hash_user = self.hash_entity(user)
-        hash_user_from_database = self.hash_entity(user_from_database)
+        hash_entity_local = self.hash_entity(user)
+        hash_entity_database = self.hash_entity(user_from_database)
 
-        self.assertTrue(hash_user.hexdigest() == hash_user_from_database.hexdigest())
-
-    def hash_entity(self, entity):
-        string = ""
-        for field in dir(entity):
-            if field.startswith("_"): continue
-            string += field + str(getattr(entity, field))
-        return md5(bytes(string, encoding='utf8'))
+        self.assertTrue(hash_entity_local == hash_entity_database)
 
     def test_update_entity(self):
         user = User()
@@ -95,12 +94,4 @@ class MySQLGatewayTest(unittest.TestCase):
         hash_entity_database = self.hash_entity(user_from_database)
         hash_entity_local = self.hash_entity(user)
 
-        self.assertTrue(hash_entity_local.hexdigest() == hash_entity_database.hexdigest())
-
-
-
-
-
-
-
-
+        self.assertTrue(hash_entity_local == hash_entity_database)
