@@ -75,6 +75,7 @@ class MySQLGateway(Gateway):
 
         cursor = self.connection.cursor()
         cursor.execute(query)
+        self.connection.commit()
         cursor.close()
 
     def delete_entity(self, entity):
