@@ -5,11 +5,13 @@ from hashlib import md5
 
 from yearsinpixels_business.Entity.User import User
 
+import test
 from yearsinpixels_data.Gateway.MySQLGateway import MySQLGateway
 from yearsinpixels_data.Mapper.UserMapper import UserMapper
 from yearsinpixels_data.QueryObject.Criteria.Criteria import Criteria
 
-
+@unittest.skipIf(test.disable_mysql_testcase,
+                 "MySQL support will not work on this system. Use the 'yearsinpixels_data.Gateway.TestGateway' package.")
 class UserMapperWithMySQLGatewayTest(unittest.TestCase):
     @staticmethod
     def hash_entity(entity):

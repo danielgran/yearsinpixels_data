@@ -4,23 +4,15 @@ from datetime import datetime
 from hashlib import md5
 
 from yearsinpixels_business.Entity.User import User
+
+import test
 from yearsinpixels_data.Gateway.Gateway import Gateway
 from yearsinpixels_data.Gateway.MySQLGateway import MySQLGateway
 from yearsinpixels_data.QueryObject.Criteria.Criteria import Criteria
 from yearsinpixels_data.QueryObject.Criteria.MatchCriteria import MatchCriteria
 from yearsinpixels_data.QueryObject.SelectQuery import SelectQuery
 
-try:
-    import mysql.connector
-
-    connection = mysql.connector.connect(user='root', database='yearsinpixels', password='somepass')
-    connection.close()
-    disable_testcase = False
-except:
-    disable_testcase = True
-
-
-@unittest.skipIf(disable_testcase,
+@unittest.skipIf(test.disable_mysql_testcase,
                  "MySQL support will not work on this system. Use the 'yearsinpixels_data.Gateway.TestGateway' package.")
 class MySQLGatewayTest(unittest.TestCase):
     @staticmethod
