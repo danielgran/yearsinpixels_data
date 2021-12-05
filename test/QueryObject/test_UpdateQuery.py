@@ -41,9 +41,3 @@ class UpdateQueryTest(unittest.TestCase):
 
         update_query.add_criteria(Criteria.matches("guid", "some-guid"))
         generated_sql = update_query.generate_sql()
-
-        print(generated_sql)
-
-
-
-
