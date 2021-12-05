@@ -28,5 +28,3 @@ class QueryObjectTest(unittest.TestCase):
         self.queryObject.add_criteria(criteria)
         self.assertTrue(criteria in self.queryObject.criteria)
 
-
-
