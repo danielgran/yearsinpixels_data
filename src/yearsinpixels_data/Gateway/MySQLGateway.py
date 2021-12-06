@@ -62,6 +62,9 @@ class MySQLGateway(Gateway):
 
         return constructed_entity
 
+    def read_all_entities(self, query_object) -> Entity:
+        pass
+
     def update_entity(self, entity):
         business_object_class = type(entity)
         entity_map = ConcreteEntityMapFactory.construct(business_object_class)

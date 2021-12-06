@@ -1,7 +1,10 @@
+from yearsinpixels_business.Entity.Entity import Entity
+
 from yearsinpixels_data.Gateway.Gateway import Gateway
 
 
 class TestGateway(Gateway):
+
     def __init__(self):
         self.items = list()
 
@@ -22,6 +25,14 @@ class TestGateway(Gateway):
                 if entity.guid == self.items[iterator].guid:
                     to_return = self.items[iterator]
         return to_return
+
+    def read_all_entities(self, parent_entity):
+        to_return = list()
+        for tuple in self.items:
+            if tuple[0] == parent_entity:
+                to_return.append(tuple[1])
+        return to_return
+
 
     def update_entity(self, entity):
         for iter in range(len(self.items)):

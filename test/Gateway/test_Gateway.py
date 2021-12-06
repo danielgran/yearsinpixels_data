@@ -15,5 +15,6 @@ class GatewayTest(unittest.TestCase):
     def test_methods(self):
         self.assertIsNotNone(Gateway.create_entity)
         self.assertIsNotNone(Gateway.read_entity)
+        self.assertIsNotNone(Gateway.read_all_entities)
         self.assertIsNotNone(Gateway.update_entity)
         self.assertIsNotNone(Gateway.delete_entity)

@@ -3,6 +3,7 @@ import uuid
 from datetime import datetime
 from hashlib import md5
 
+from yearsinpixels_business.Entity.Day import Day
 from yearsinpixels_business.Entity.User import User
 
 import test
@@ -10,7 +11,9 @@ from yearsinpixels_data.Gateway.Gateway import Gateway
 from yearsinpixels_data.Gateway.MySQLGateway import MySQLGateway
 from yearsinpixels_data.QueryObject.Criteria.Criteria import Criteria
 from yearsinpixels_data.QueryObject.Criteria.MatchCriteria import MatchCriteria
+from yearsinpixels_data.QueryObject.JoinQuery import JoinQuery
 from yearsinpixels_data.QueryObject.SelectQuery import SelectQuery
+
 
 @unittest.skipIf(test.disable_mysql_testcase,
                  "MySQL support will not work on this system. Use the 'yearsinpixels_data.Gateway.TestGateway' package.")
@@ -46,6 +49,11 @@ class MySQLGatewayTest(unittest.TestCase):
         user.email = str(uuid.uuid4())
         self.gateway.create_entity(user)
 
+    def test_create_foreign_key_entity(self):
+        user = User()
+        day = Day()
+        self.gateway.create_entity(day)
+
     def test_read_entity(self):
         user = User()
 
@@ -65,6 +73,14 @@ class MySQLGatewayTest(unittest.TestCase):
         hash_entity_database = self.hash_entity(user_from_database)
 
         self.assertTrue(hash_entity_local == hash_entity_database)
+
+    def test_read_all_entites(self):
+        user = User()
+        day = Day()
+        self.gateway.create_entity(day)
+        join_query = JoinQuery(User, Day)
+
+        join_query.add_criteria(Criteria.matches("guid", user.guid))
 
     def test_update_entity(self):
         user = User()
@@ -87,3 +103,6 @@ class MySQLGatewayTest(unittest.TestCase):
         hash_entity_local = self.hash_entity(user)
 
         self.assertTrue(hash_entity_local == hash_entity_database)
+
+    def test_delete_entity(self):
+        pass

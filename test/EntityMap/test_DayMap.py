@@ -1,10 +1,7 @@
 import unittest
 
-from yearsinpixels_business.Entity.User import User
-
 from yearsinpixels_data.EntityMap.DayMap import DayMap
 from yearsinpixels_data.EntityMap.EntityMap import EntityMap
-from yearsinpixels_data.EntityMap.UserMap import UserMap
 
 
 class UserMapTest(unittest.TestCase):
@@ -19,8 +16,9 @@ class UserMapTest(unittest.TestCase):
                 continue
 
             data_pair_from_property = getattr(daymap, var)
-            self.assertTrue(var in dir(DayMap()))
-            self.assertTrue(isinstance(data_pair_from_property.field_name, str) and len(data_pair_from_property.field_name) > 0)
+            self.assertTrue(var in dir(daymap))
+            self.assertTrue(
+                isinstance(data_pair_from_property.field_name, str) and len(data_pair_from_property.field_name) > 0)
 
     def test_get_primary_identifier(self):
         usermap = DayMap()

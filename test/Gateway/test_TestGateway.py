@@ -1,5 +1,6 @@
 import unittest
 
+from yearsinpixels_business.Entity.Day import Day
 from yearsinpixels_business.Entity.User import User
 
 from yearsinpixels_data.Gateway.Gateway import Gateway
@@ -28,6 +29,17 @@ class TestGatewayTest(unittest.TestCase):
         self.gateway.create_entity(entity)
 
         self.assertTrue(self.gateway.read_entity(entity) == entity, "Can not find added entity.")
+
+    def test_read_all_entites(self):
+        user = User()
+        day = Day()
+        self.gateway.create_entity((user, day))
+        self.gateway.create_entity((user, day))
+        self.gateway.create_entity((user, day))
+
+        self.assertEqual(len(self.gateway.read_all_entities(user)), 3)
+
+
 
     def test_read_with_meta(self):
         entity = User()

@@ -3,7 +3,6 @@ from datetime import datetime
 from yearsinpixels_data.EntityMap.DatatypeDatetime import DatatypeDatetime
 
 
-
 class MySQLDatatypeDatetime(DatatypeDatetime):
     def convert_to_database(self, element):
         is_time = isinstance(element, datetime)

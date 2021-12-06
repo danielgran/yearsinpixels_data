@@ -13,8 +13,13 @@ class Gateway(ABC):
         pass
 
     @abstractmethod
+    def read_all_entities(self, query_object) -> Entity:
+        pass
+
+    @abstractmethod
     def update_entity(self, entity):
         pass
+
 
     @abstractmethod
     def delete_entity(self, entity):
