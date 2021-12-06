@@ -20,7 +20,6 @@ class UserMapperWithMySQLGatewayTest(unittest.TestCase):
             if field.startswith("_"): continue
             if field.startswith("id"): continue
             string += field + str(getattr(entity, field))
-        return string
         return md5(bytes(string, encoding='utf8')).hexdigest()
 
     def setUp(self):

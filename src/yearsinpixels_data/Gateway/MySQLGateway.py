@@ -63,7 +63,26 @@ class MySQLGateway(Gateway):
         return constructed_entity
 
     def read_all_entities(self, query_object) -> Entity:
-        pass
+        query = query_object.generate_sql()
+        cursor = self.connection.cursor(dictionary=True)
+        cursor.execute(query)
+
+        entity_map = ConcreteEntityMapFactory().construct(query_object.entity)
+        returns = list()
+
+        for entity in cursor:
+            constructed_entity = query_object.entity()
+            for field in entity.keys():
+                field_name_from_database = field
+                value_from_database = entity[field_name_from_database]
+                datapair = getattr(entity_map, field_name_from_database)
+                sql_datatype = MySQLDatatypeMap().get_mysql_type(datapair.datatype)()
+                converted_value = sql_datatype.convert_from_database(value_from_database)
+                setattr(constructed_entity, datapair.field_name, converted_value)
+            returns.append(constructed_entity)
+        cursor.close()
+
+        return returns
 
     def update_entity(self, entity):
         business_object_class = type(entity)

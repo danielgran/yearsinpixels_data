@@ -1,6 +1,6 @@
 import unittest
 import uuid
-from datetime import datetime
+from datetime import date, datetime, timedelta
 from hashlib import md5
 
 from yearsinpixels_business.Entity.Day import Day
@@ -77,15 +77,25 @@ class MySQLGatewayTest(unittest.TestCase):
 
         self.assertTrue(hash_entity_local == hash_entity_database)
 
-    @unittest.skip
     def test_read_all_entites(self):
         user = User()
-        #todo id_use
-        day = Day()
-        self.gateway.create_entity(day)
-        join_query = JoinQuery(User, Day)
+        user.email = str(uuid.uuid4())
+        self.gateway.create_entity(user)
+        select_query = SelectQuery(User)
+        select_query.add_criteria(MatchCriteria("guid", user.guid))
+        user = self.gateway.read_entity(select_query)
+        count = 100
+        for i in range(count):
+            day = Day()
+            day.title = str(i)
+            day.id_user = user.id
+            day.date = date.today() + timedelta(days=i)
+            self.gateway.create_entity(day)
 
-        join_query.add_criteria(Criteria.matches("guid", user.guid))
+        select_query = SelectQuery(Day)
+        select_query.add_criteria(Criteria.matches("id_user", user.id))
+        days = self.gateway.read_all_entities(select_query)
+        self.assertEqual(len(days), count)
 
     def test_update_entity(self):
         user = User()
