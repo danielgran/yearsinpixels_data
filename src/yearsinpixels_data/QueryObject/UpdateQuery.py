@@ -24,6 +24,8 @@ class UpdateQuery(QueryObject):
 
         update_data = list()
         for field_name in dir(entity_map):
+            if field_name.startswith("id"):
+                continue
             if field_name.startswith("_") or field_name.startswith("get"): continue
             generated_sql += f"{field_name} = '%s', "
             unconverted_field_value = getattr(self.update_object, field_name)

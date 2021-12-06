@@ -18,7 +18,9 @@ class UserMapperWithMySQLGatewayTest(unittest.TestCase):
         string = ""
         for field in dir(entity):
             if field.startswith("_"): continue
+            if field.startswith("id"): continue
             string += field + str(getattr(entity, field))
+        return string
         return md5(bytes(string, encoding='utf8')).hexdigest()
 
     def setUp(self):
@@ -52,7 +54,9 @@ class UserMapperWithMySQLGatewayTest(unittest.TestCase):
 
         self.usermapper.update(user)
         user_from_database = self.usermapper.find(Criteria.matches("guid", user.guid))
-        self.assertTrue(self.hash_entity(user) == self.hash_entity(user_from_database))
+        hash_local = self.hash_entity(user)
+        hash_database = self.hash_entity(user_from_database)
+        self.assertEqual(hash_local, hash_database)
 
 
 

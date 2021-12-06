@@ -23,6 +23,7 @@ class MySQLGatewayTest(unittest.TestCase):
         string = ""
         for field in dir(entity):
             if field.startswith("_"): continue
+            if field.startswith("id"): continue
             string += field + str(getattr(entity, field))
         return md5(bytes(string, encoding='utf8')).hexdigest()
 

@@ -1,6 +1,7 @@
 from yearsinpixels_data.EntityMap.Datapair import Datapair
 from yearsinpixels_data.EntityMap.DatatypeBoolean import DatatypeBoolean
 from yearsinpixels_data.EntityMap.DatatypeDatetime import DatatypeDatetime
+from yearsinpixels_data.EntityMap.DatatypeInteger import DatatypeInteger
 from yearsinpixels_data.EntityMap.DatatypeString import DatatypeString
 from yearsinpixels_data.EntityMap.EntityMap import EntityMap
 
@@ -15,8 +16,13 @@ class UserMap(EntityMap):
         return self.guid
 
     @property
+    def id(self):
+        return Datapair(DatatypeInteger, "id")
+
+    @property
     def guid(self):
         return Datapair(DatatypeString, "guid")
+
 
     @property
     def email(self):

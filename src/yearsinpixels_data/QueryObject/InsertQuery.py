@@ -17,6 +17,7 @@ class InsertQuery(QueryObject):
         sql_code += str(entity_map.get_common_name())
         sql_code += " ("
         for datapair in sql_map:
+            if datapair.field_name == "id": continue
             sql_code += f"{datapair.field_name}, "
 
         # Delete the last two characters ', ' from the sql code.
@@ -25,6 +26,7 @@ class InsertQuery(QueryObject):
         sql_code += ") VALUES ( "
 
         for datapair in sql_map.keys():
+            if datapair.field_name == "id": continue
             mysql_datatype = MySQLDatatypeMap().get_mysql_type(datapair.datatype)
             mysql_datatype = mysql_datatype()
             value = sql_map.get(datapair)
