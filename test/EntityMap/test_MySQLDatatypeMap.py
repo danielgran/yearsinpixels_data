@@ -1,6 +1,6 @@
 import unittest
 
-from yearsinpixels_data.EntityMap import MySQLDatatypeDate
+from yearsinpixels_data.EntityMap.MySQLDatatypeDate import MySQLDatatypeDate
 from yearsinpixels_data.EntityMap.DatatypeBoolean import DatatypeBoolean
 from yearsinpixels_data.EntityMap.DatatypeDate import DatatypeDate
 from yearsinpixels_data.EntityMap.DatatypeDatetime import DatatypeDatetime
