@@ -31,5 +31,4 @@ class SelectQuery(QueryObject):
             if iterator + 1 != len(self.criteria):
                 gen_query += " AND "
             iterator += 1
-        gen_query += ";"
         return gen_query

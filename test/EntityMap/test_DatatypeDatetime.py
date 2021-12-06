@@ -5,7 +5,7 @@ from yearsinpixels_data.EntityMap.Datatype import Datatype
 from yearsinpixels_data.EntityMap.DatatypeDatetime import DatatypeDatetime
 
 
-class DatatypeIntegerTest(unittest.TestCase):
+class DatatypeDatetimeTest(unittest.TestCase):
     def test_is_there(self):
         self.assertIsNotNone(DatatypeDatetime)
 

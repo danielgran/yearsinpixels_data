@@ -1,5 +1,6 @@
 import unittest
 
+from yearsinpixels_business.Entity.Day import Day
 from yearsinpixels_business.Entity.User import User
 
 from yearsinpixels_data.EntityMap.ConcreteEntityMapFactory import ConcreteEntityMapFactory
@@ -13,7 +14,7 @@ class ConcreteMapFactoryTest(unittest.TestCase):
         self.assertIsNotNone(ConcreteEntityMapFactory.construct)
 
     def test_behaviour(self):
-        classes=[User]
+        classes=[User, Day]
 
         for entity_class in classes:
             entity_map = ConcreteEntityMapFactory.construct(entity_class)
