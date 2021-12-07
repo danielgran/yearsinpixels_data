@@ -24,7 +24,12 @@ class MySQLGatewayTest(unittest.TestCase):
         for field in dir(entity):
             if field.startswith("_"): continue
             if field.startswith("id"): continue
-            string += field + str(getattr(entity, field))
+            if isinstance(getattr(entity, field), str):
+                string += field + getattr(entity, field)
+            else:
+                string += field + str(getattr(entity, field))
+
+        return string
         return md5(bytes(string, encoding='utf8')).hexdigest()
 
     def setUp(self):
@@ -50,12 +55,28 @@ class MySQLGatewayTest(unittest.TestCase):
         user.email = str(uuid.uuid4())
         self.gateway.create_entity(user)
 
-    # todo id_use
-    @unittest.skip
     def test_create_foreign_key_entity(self):
         user = User()
+        user.email = str(uuid.uuid4())
+        self.gateway.create_entity(user)
+        select_query = SelectQuery(User)
+        select_query.add_criteria(MatchCriteria("guid", user.guid))
+        user = self.gateway.read_entity(select_query)
+
         day = Day()
+        day.title = "some-day"
+        day.id_user = user.id
         self.gateway.create_entity(day)
+
+        select_query = SelectQuery(Day)
+        select_query.add_criteria(Criteria.matches("id_user", user.id))
+        day_from_database = self.gateway.read_entity(select_query)
+        local_hash = self.hash_entity(day)
+        database_hash = self.hash_entity(day_from_database)
+        # strings do not work out here, forther investigation needed
+        # day from database datatype are bytes?"?!!?!?!?!?!?!?!?!?
+        # test fails.
+        self.assertEqual(self.hash_entity(day), self.hash_entity(day_from_database))
 
     def test_read_entity(self):
         user = User()

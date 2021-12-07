@@ -10,5 +10,7 @@ class MySQLDatatypeString(DatatypeString):
         return str(element)
 
     def convert_from_database(self, element):
+        if isinstance(element, bytes):
+            return element.decode('utf-8')
         return element
 

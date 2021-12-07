@@ -21,7 +21,10 @@ class MySQLDatatypeStringTest(unittest.TestCase):
         with self.assertRaises(Exception) as context:
             MySQLDatatypeString().convert_to_database(123)
 
-
-    def test_convert_from_database(self):
+    def test_convert_from_database_normal_string(self):
         string = "This is a string for testing purposes"
         self.assertEqual(string, MySQLDatatypeString().convert_from_database(string))
+
+    def test_convert_from_database_bytes(self):
+        bytes = b"This is a string for testing purposes"
+        self.assertEqual(bytes.decode('utf-8'), MySQLDatatypeString().convert_from_database(bytes))
