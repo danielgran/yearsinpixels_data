@@ -19,8 +19,8 @@ class MoodMap(EntityMap):
 
     @property
     def title(self):
-        return Datapair(DatatypeDate, "title")
+        return Datapair(DatatypeString, "title")
 
     @property
     def color(self):
-        return Datapair(DatatypeString, "color")
+        return Datapair(DatatypeInteger, "color")
