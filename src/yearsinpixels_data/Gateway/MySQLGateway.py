@@ -41,48 +41,41 @@ class MySQLGateway(Gateway):
         cursor.close()
 
     def read_entity(self, query_object) -> Entity:
-
         query = query_object.generate_sql()
         cursor = self.connection.cursor(dictionary=True)
         cursor.execute(query)
 
-        entity_map = ConcreteEntityMapFactory().construct(query_object.entity)
-        constructed_entity = query_object.entity()
-
+        entity_from_database = None
         for entity in cursor:
-            for field in entity.keys():
-                field_name_from_database = field
-                value_from_database = entity[field_name_from_database]
-                datapair = getattr(entity_map, field_name_from_database)
-                sql_datatype = MySQLDatatypeMap().get_mysql_type(datapair.datatype)()
-                converted_value = sql_datatype.convert_from_database(value_from_database)
-                setattr(constructed_entity, datapair.field_name, converted_value)
+            entity_from_database = self.read_single_entity_from_cursor_iteratable(entity, query_object.entity)
             break  # Only the first entity
-        cursor.close()
 
-        return constructed_entity
+        cursor.close()
+        return entity_from_database
 
     def read_all_entities(self, query_object) -> Entity:
         query = query_object.generate_sql()
         cursor = self.connection.cursor(dictionary=True)
         cursor.execute(query)
 
-        entity_map = ConcreteEntityMapFactory().construct(query_object.entity)
-        returns = list()
-
+        entities_from_database = list()
         for entity in cursor:
-            constructed_entity = query_object.entity()
-            for field in entity.keys():
-                field_name_from_database = field
-                value_from_database = entity[field_name_from_database]
-                datapair = getattr(entity_map, field_name_from_database)
-                sql_datatype = MySQLDatatypeMap().get_mysql_type(datapair.datatype)()
-                converted_value = sql_datatype.convert_from_database(value_from_database)
-                setattr(constructed_entity, datapair.field_name, converted_value)
-            returns.append(constructed_entity)
+            entities_from_database.append(self.read_single_entity_from_cursor_iteratable(entity, query_object.entity))
         cursor.close()
 
-        return returns
+        return entities_from_database
+
+    def read_single_entity_from_cursor_iteratable(self, cursor_iteratabe, output_type):
+        entity_map = ConcreteEntityMapFactory().construct(output_type)
+        constructed_entity = output_type()
+        for field in cursor_iteratabe.keys():
+            field_name_from_database = field
+            value_from_database = cursor_iteratabe[field_name_from_database]
+            datapair = getattr(entity_map, field_name_from_database)
+            sql_datatype = MySQLDatatypeMap().get_mysql_type(datapair.datatype)()
+            converted_value = sql_datatype.convert_from_database(value_from_database)
+            setattr(constructed_entity, datapair.field_name, converted_value)
+        return constructed_entity
 
     def update_entity(self, entity):
         business_object_class = type(entity)

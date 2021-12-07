@@ -11,7 +11,6 @@ from yearsinpixels_data.Gateway.Gateway import Gateway
 from yearsinpixels_data.Gateway.MySQLGateway import MySQLGateway
 from yearsinpixels_data.QueryObject.Criteria.Criteria import Criteria
 from yearsinpixels_data.QueryObject.Criteria.MatchCriteria import MatchCriteria
-from yearsinpixels_data.QueryObject.JoinQuery import JoinQuery
 from yearsinpixels_data.QueryObject.SelectQuery import SelectQuery
 
 
@@ -28,8 +27,6 @@ class MySQLGatewayTest(unittest.TestCase):
                 string += field + getattr(entity, field)
             else:
                 string += field + str(getattr(entity, field))
-
-        return string
         return md5(bytes(string, encoding='utf8')).hexdigest()
 
     def setUp(self):
@@ -73,15 +70,11 @@ class MySQLGatewayTest(unittest.TestCase):
         day_from_database = self.gateway.read_entity(select_query)
         local_hash = self.hash_entity(day)
         database_hash = self.hash_entity(day_from_database)
-        # strings do not work out here, forther investigation needed
-        # day from database datatype are bytes?"?!!?!?!?!?!?!?!?!?
-        # test fails.
-        self.assertEqual(self.hash_entity(day), self.hash_entity(day_from_database))
+        self.assertEqual(local_hash, database_hash)
 
     def test_read_entity(self):
         user = User()
 
-        # replace microseconds from cache user
         for field in dir(user):
             if isinstance(getattr(user, field), datetime):
                 setattr(user, field, getattr(user, field).replace(microsecond=0))
@@ -95,7 +88,6 @@ class MySQLGatewayTest(unittest.TestCase):
 
         hash_entity_local = self.hash_entity(user)
         hash_entity_database = self.hash_entity(user_from_database)
-
         self.assertTrue(hash_entity_local == hash_entity_database)
 
     def test_read_all_entites(self):
