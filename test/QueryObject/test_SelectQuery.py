@@ -27,7 +27,7 @@ class SelectQueryTest(unittest.TestCase):
         self.queryObject.add_criteria(Criteria.matches("name", "pete"))
         self.queryObject.add_criteria(Criteria.matches("krawatte", "keine"))
         generated_sql = self.queryObject.generate_sql()
-        self.assertEqual("SELECT created, email, email_verified, enabled, guid, id, login_last, modified, name_first, name_last, password, password_last_update, twofatoken FROM user WHERE`guid` = 'some-random-guid' AND `name` = 'pete' AND `krawatte` = 'keine'", generated_sql)
+        self.assertEqual("SELECT created, email, email_verified, enabled, guid, id, login_last, modified, name_first, name_last, password, password_last_update, twofatoken FROM user WHERE `guid` = 'some-random-guid' AND `name` = 'pete' AND `krawatte` = 'keine'", generated_sql)
 
     def test_without_criteria(self):
         sql = self.queryObject.generate_sql()

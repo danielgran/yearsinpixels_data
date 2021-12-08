@@ -20,7 +20,7 @@ class MoodMapper:
 
     def find_all(self):
         if isinstance(self.gateway, TestGateway):
-            return self.gateway.read_all_entities(User)
+            return self.gateway.read_all_entities(Mood)
         select_query = SelectQuery(Mood)
         return self.gateway.read_all_entities(select_query)
 
