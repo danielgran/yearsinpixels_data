@@ -14,21 +14,25 @@ class SelectQuery(QueryObject):
         self.criteria = list()
 
     def generate_sql(self):
-        gen_query = "SELECT "
+        generated_query = "SELECT "
 
         entity_map = ConcreteEntityMapFactory.construct(self.entity)
 
         for field_name in dir(entity_map):
             if field_name.startswith("_") or field_name.startswith("get"): continue
-            gen_query += f"{field_name}, "
-        gen_query = gen_query[:len(gen_query) - 2]
+            generated_query += f"{field_name}, "
+        generated_query = generated_query[:len(generated_query) - 2]
 
-        gen_query += f" FROM {entity_map.get_common_name()} WHERE"
+        generated_query += f" FROM {entity_map.get_common_name()}"
 
+        if len(self.criteria) == 0:
+            return generated_query
+
+        generated_query += " WHERE "
         iterator = 0
         for criteria in self.criteria:
-            gen_query += criteria.generate_sql()
+            generated_query += criteria.generate_sql()
             if iterator + 1 != len(self.criteria):
-                gen_query += " AND "
+                generated_query += " AND "
             iterator += 1
-        return gen_query
+        return generated_query

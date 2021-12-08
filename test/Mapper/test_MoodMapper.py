@@ -1,4 +1,5 @@
 import unittest
+import uuid
 
 from yearsinpixels_business.Entity.Mood import Mood
 
@@ -24,7 +25,7 @@ class MoodMapperTest(unittest.TestCase):
 
     def test_add(self):
         mood = Mood()
-        mood.email = "some@nice.liame"
+        mood.title = str(uuid.uuid4())
         self.mapper.add(mood)
 
         self.assertTrue(mood in self.mapper.gateway.items)

@@ -10,7 +10,10 @@ class MoodMapper:
         self.gateway = gateway
 
     def add(self, mood):
-        self.gateway.items.append(mood)
+        if (isinstance(self.gateway, TestGateway)):
+            self.gateway.items.append(mood)
+        self.gateway.create_entity(mood)
+
 
     def find(self, user):
         pass
@@ -19,7 +22,7 @@ class MoodMapper:
         if isinstance(self.gateway, TestGateway):
             return self.gateway.read_all_entities(User)
         select_query = SelectQuery(Mood)
-        return self.gateway.read_entity(select_query)
+        return self.gateway.read_all_entities(select_query)
 
     def update(self, user, day):
         pass
