@@ -10,7 +10,7 @@ from yearsinpixels_data.Mapper.MoodMapper import MoodMapper
 
 @unittest.skipIf(test.disable_mysql_testcase,
                  "MySQL support will not work on this system. Use the 'yearsinpixels_data.Gateway.TestGateway' package.")
-class UserMapperWithMySQLGatewayTest(unittest.TestCase):
+class MoodMapperWithMySQLGatewayTest(unittest.TestCase):
     @staticmethod
     def hash_entity(entity):
         string = ""
