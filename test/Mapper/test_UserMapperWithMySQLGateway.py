@@ -10,6 +10,7 @@ from yearsinpixels_data.Gateway.MySQLGateway import MySQLGateway
 from yearsinpixels_data.Mapper.UserMapper import UserMapper
 from yearsinpixels_data.QueryObject.Criteria.Criteria import Criteria
 
+
 @unittest.skipIf(test.disable_mysql_testcase,
                  "MySQL support will not work on this system. Use the 'yearsinpixels_data.Gateway.TestGateway' package.")
 class UserMapperWithMySQLGatewayTest(unittest.TestCase):
@@ -30,7 +31,7 @@ class UserMapperWithMySQLGatewayTest(unittest.TestCase):
     def test_interaction(self):
         user = User()
         user.email = str(uuid.uuid4())
-        # replace microseconds from cache user
+
         for field in dir(user):
             if isinstance(getattr(user, field), datetime):
                 setattr(user, field, getattr(user, field).replace(microsecond=0))
@@ -42,7 +43,7 @@ class UserMapperWithMySQLGatewayTest(unittest.TestCase):
     def test_update(self):
         user = User()
         user.email = str(uuid.uuid4())
-        # replace microseconds from cache user
+
         for field in dir(user):
             if isinstance(getattr(user, field), datetime):
                 setattr(user, field, getattr(user, field).replace(microsecond=0))
@@ -56,6 +57,3 @@ class UserMapperWithMySQLGatewayTest(unittest.TestCase):
         hash_local = self.hash_entity(user)
         hash_database = self.hash_entity(user_from_database)
         self.assertEqual(hash_local, hash_database)
-
-
-

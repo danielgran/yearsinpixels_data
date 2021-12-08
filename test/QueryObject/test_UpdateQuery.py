@@ -43,4 +43,3 @@ class UpdateQueryTest(unittest.TestCase):
         generated_sql = update_query.generate_sql()
 
         self.assertTrue(generated_sql.count(" id = ") == 0)
-

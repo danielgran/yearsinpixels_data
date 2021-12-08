@@ -34,4 +34,3 @@ class JoinQueryTest(unittest.TestCase):
         joinquery = JoinQuery(User, Day)
         generated_string = joinquery.generate_sql()
         self.assertTrue(not generated_string.endswith("WHERE "))
-

@@ -11,4 +11,3 @@ class QueryObject(ABC):
 
     def add_criteria(self, criteria):
         self.criteria.append(criteria)
-

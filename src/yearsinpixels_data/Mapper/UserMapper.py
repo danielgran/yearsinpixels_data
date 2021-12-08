@@ -3,6 +3,7 @@ from yearsinpixels_business.Entity.User import User
 from yearsinpixels_data.Gateway.TestGateway import TestGateway
 from yearsinpixels_data.QueryObject.SelectQuery import SelectQuery
 
+
 class UserMapper:
 
     def __init__(self, gateway):

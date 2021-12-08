@@ -1,4 +1,3 @@
-import copy
 import unittest
 
 from yearsinpixels_business.Entity.Day import Day

@@ -1,8 +1,8 @@
 from yearsinpixels_business.Entity.Mood import Mood
-from yearsinpixels_business.Entity.User import User
 
 from yearsinpixels_data.Gateway.TestGateway import TestGateway
 from yearsinpixels_data.QueryObject.SelectQuery import SelectQuery
+
 
 class MoodMapper:
 
@@ -13,7 +13,6 @@ class MoodMapper:
         if (isinstance(self.gateway, TestGateway)):
             self.gateway.items.append(mood)
         self.gateway.create_entity(mood)
-
 
     def find(self, user):
         pass

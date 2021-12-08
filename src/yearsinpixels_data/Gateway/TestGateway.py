@@ -1,5 +1,3 @@
-from yearsinpixels_business.Entity.Entity import Entity
-
 from yearsinpixels_data.Gateway.Gateway import Gateway
 
 
@@ -33,7 +31,6 @@ class TestGateway(Gateway):
                 to_return.append(tuple[1])
         return to_return
 
-
     def update_entity(self, entity):
         for iter in range(len(self.items)):
             if entity.guid == self.items[iter].guid:
@@ -42,4 +39,4 @@ class TestGateway(Gateway):
     def delete_entity(self, entity):
         for iter in range(len(self.items)):
             if entity.guid == self.items[iter].guid:
-                del(self.items[iter])
+                del (self.items[iter])

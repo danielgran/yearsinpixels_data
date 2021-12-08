@@ -20,7 +20,6 @@ class InsertQuery(QueryObject):
             if datapair.field_name == "id": continue
             sql_code += f"{datapair.field_name}, "
 
-        # Delete the last two characters ', ' from the sql code.
         sql_code = sql_code[:len(sql_code) - 2]
 
         sql_code += ") VALUES ( "
@@ -33,14 +32,13 @@ class InsertQuery(QueryObject):
             value = mysql_datatype.convert_to_database(value)
             sql_code += f"'{value}', "
 
-        # Delete the last two characters ', ' from the sql code.
         sql_code = sql_code[:len(sql_code) - 2]
         sql_code += ");"
 
         return sql_code
 
     def merge_entity_with_datamap(self, entity, map):
-        # return dict of type <datapair(field_name, datatype), value>
+        # returns dict of type <datapair(field_name, datatype), value>
         entity_as_map = dict()
         output = dict()
         # Add the bare entity to the map

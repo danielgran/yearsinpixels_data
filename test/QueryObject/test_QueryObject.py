@@ -5,10 +5,10 @@ from yearsinpixels_data.QueryObject.Criteria.Criteria import Criteria
 from yearsinpixels_data.QueryObject.QueryObject import QueryObject
 
 
-
 class TestProcedureQueryClass(QueryObject):
     def generate_sql(self):
         pass
+
 
 class QueryObjectTest(unittest.TestCase):
     def setUp(self):
@@ -27,4 +27,3 @@ class QueryObjectTest(unittest.TestCase):
         criteria = Criteria.matches("user", "daniel")
         self.queryObject.add_criteria(criteria)
         self.assertTrue(criteria in self.queryObject.criteria)
-

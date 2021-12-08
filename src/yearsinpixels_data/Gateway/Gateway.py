@@ -20,7 +20,6 @@ class Gateway(ABC):
     def update_entity(self, entity):
         pass
 
-
     @abstractmethod
     def delete_entity(self, entity):
         pass

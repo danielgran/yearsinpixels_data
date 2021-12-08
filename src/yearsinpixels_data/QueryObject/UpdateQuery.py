@@ -46,5 +46,3 @@ class UpdateQuery(QueryObject):
             iterator += 1
         generated_sql += ";"
         return generated_sql
-
-
