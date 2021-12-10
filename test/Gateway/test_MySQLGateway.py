@@ -4,6 +4,7 @@ from datetime import date, datetime, timedelta
 from hashlib import md5
 
 from yearsinpixels_business.Entity.Day import Day
+from yearsinpixels_business.Entity.Mood import Mood
 from yearsinpixels_business.Entity.User import User
 
 import test
@@ -60,9 +61,17 @@ class MySQLGatewayTest(unittest.TestCase):
         select_query.add_criteria(MatchCriteria("guid", user.guid))
         user = self.gateway.read_entity(select_query)
 
+        mood = Mood()
+        mood.title = str(uuid.uuid4())
+        self.gateway.create_entity(mood)
+        select_query = SelectQuery(Mood)
+        select_query.add_criteria(MatchCriteria("title", mood.title))
+        mood = self.gateway.read_entity(select_query)
+
         day = Day()
         day.title = "some-day"
         day.id_user = user.id
+        day.id_mood1 = mood.id
         self.gateway.create_entity(day)
 
         select_query = SelectQuery(Day)

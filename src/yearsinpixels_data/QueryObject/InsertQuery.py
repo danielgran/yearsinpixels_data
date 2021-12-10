@@ -16,8 +16,12 @@ class InsertQuery(QueryObject):
 
         sql_code += str(entity_map.get_common_name())
         sql_code += " ("
-        for datapair in sql_map:
+        for datapair in sql_map.keys():
             if datapair.field_name == "id": continue
+            value = sql_map.get(datapair)
+            if (datapair.field_name.startswith("id_") and value == 0):
+                continue
+
             sql_code += f"{datapair.field_name}, "
 
         sql_code = sql_code[:len(sql_code) - 2]
@@ -26,9 +30,12 @@ class InsertQuery(QueryObject):
 
         for datapair in sql_map.keys():
             if datapair.field_name == "id": continue
+            value = sql_map.get(datapair)
+            if (datapair.field_name.startswith("id_") and value == 0):
+                continue
+
             mysql_datatype = MySQLDatatypeMap().get_mysql_type(datapair.datatype)
             mysql_datatype = mysql_datatype()
-            value = sql_map.get(datapair)
             value = mysql_datatype.convert_to_database(value)
             sql_code += f"'{value}', "
 

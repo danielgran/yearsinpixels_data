@@ -18,6 +18,14 @@ class DayMap(EntityMap):
         return Datapair(DatatypeInteger, "id_user")
 
     @property
+    def id_mood1(self):
+        return Datapair(DatatypeInteger, "id_mood1")
+
+    @property
+    def id_mood2(self):
+        return Datapair(DatatypeInteger, "id_mood2")
+
+    @property
     def date(self):
         return Datapair(DatatypeDate, "date")
 

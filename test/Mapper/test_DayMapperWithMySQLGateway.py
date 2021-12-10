@@ -10,7 +10,7 @@ from yearsinpixels_data.Mapper.MoodMapper import MoodMapper
 
 @unittest.skipIf(test.disable_mysql_testcase,
                  "MySQL support will not work on this system. Use the 'yearsinpixels_data.Gateway.TestGateway' package.")
-class DayMapperWithMySQLGatewayTest(unittest.TestCase):
+class UserMapperWithMySQLGatewayTest(unittest.TestCase):
     @staticmethod
     def hash_entity(entity):
         string = ""
@@ -23,15 +23,14 @@ class DayMapperWithMySQLGatewayTest(unittest.TestCase):
     def setUp(self):
         gateway = MySQLGateway(username='root', password='somepass', database='yearsinpixels')
         gateway.connect()
-        self.daymapper = MoodMapper(gateway)
+        self.moodmapper = MoodMapper(gateway)
 
     def test_add_and_find_all(self):
         mood = Mood()
 
-        self.daymapper.add(mood)
+        self.moodmapper.add(mood)
 
-
-        moods_from_database = self.daymapper.find_all()
+        moods_from_database = self.moodmapper.find_all()
 
         local_mood_hash = self.hash_entity(mood)
         for single_mood_from_database in moods_from_database:
