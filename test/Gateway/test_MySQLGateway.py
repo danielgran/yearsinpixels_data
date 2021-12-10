@@ -100,6 +100,8 @@ class MySQLGatewayTest(unittest.TestCase):
         self.assertTrue(hash_entity_local == hash_entity_database)
 
     def test_read_all_entites(self):
+        mood = Mood()
+        self.gateway.create_entity(mood)
         user = User()
         user.email = str(uuid.uuid4())
         self.gateway.create_entity(user)
@@ -110,6 +112,7 @@ class MySQLGatewayTest(unittest.TestCase):
         for i in range(count):
             day = Day()
             day.title = str(i)
+            day.id_mood1 = 1
             day.id_user = user.id
             day.date = date.today() + timedelta(days=i)
             self.gateway.create_entity(day)
