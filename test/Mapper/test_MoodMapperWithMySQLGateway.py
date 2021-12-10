@@ -30,7 +30,6 @@ class DayMapperWithMySQLGatewayTest(unittest.TestCase):
 
         self.daymapper.add(mood)
 
-
         moods_from_database = self.daymapper.find_all()
 
         local_mood_hash = self.hash_entity(mood)
