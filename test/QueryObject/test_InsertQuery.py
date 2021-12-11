@@ -30,6 +30,6 @@ class CreateQueryTest(unittest.TestCase):
         day.id_mood1 = 1
         day.id_mood2 = 0
         query = InsertQuery(day).generate_sql()
-        self.assertEqual(query, "INSERT INTO day (date, id_mood1, notes, title) VALUES ( '2021-12-10', '1', '', '');")
+        self.assertEqual(query, "INSERT INTO day (date, id_mood1, notes, title) VALUES ( '2021-12-11', '1', '', '');")
         print(query)
 

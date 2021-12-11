@@ -17,11 +17,9 @@ class DayMapper:
     def find(self, day):
         pass
 
-    def find_all_from_user(self, user, criteria):
-        if isinstance(self.gateway, TestGateway):
-            return self.gateway.read_all_entities(user)
+    def find_all_from_user(self, user_criteria):
         select_query = SelectQuery(Day)
-        select_query.add_criteria(criteria)
+        select_query.add_criteria(user_criteria)
         return self.gateway.read_all_entities(select_query)
 
     def update(self, user):

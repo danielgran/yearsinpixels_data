@@ -47,7 +47,7 @@ class DayMapperWithMySQLGateway(unittest.TestCase):
         day.id_user = 1
         self.daymapper.add(day)
 
-        days_from_mapper = self.daymapper.find_all_from_user(user, Criteria.matches('id_user', 1))
+        days_from_mapper = self.daymapper.find_all_from_user(Criteria.matches('id_user', 1))
 
         for day in days_from_mapper:
             if day.id_user != 1:
