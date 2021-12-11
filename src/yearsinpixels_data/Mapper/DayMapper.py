@@ -1,4 +1,4 @@
-from yearsinpixels_business.Entity.User import User
+from yearsinpixels_business.Entity.Day import Day
 
 from yearsinpixels_data.Gateway.TestGateway import TestGateway
 from yearsinpixels_data.QueryObject.SelectQuery import SelectQuery
@@ -9,22 +9,23 @@ class DayMapper:
     def __init__(self, gateway):
         self.gateway = gateway
 
-    def add(self, user, day):
+    def add(self, day):
         if isinstance(self.gateway, TestGateway):
-            self.gateway.items.append((user, day))
+            self.gateway.items.append(day)
+        self.gateway.create_entity(day)
 
-    def find(self, user):
+    def find(self, day):
         pass
 
-    def find_all(self, user, criteria):
+    def find_all_from_user(self, user, criteria):
         if isinstance(self.gateway, TestGateway):
             return self.gateway.read_all_entities(user)
-        select_query = SelectQuery(User)
+        select_query = SelectQuery(Day)
         select_query.add_criteria(criteria)
-        return self.gateway.read_entity(select_query)
+        return self.gateway.read_all_entities(select_query)
 
-    def update(self, user, day):
+    def update(self, user):
         pass
 
-    def remove(self, user, day):
+    def remove(self, day):
         pass

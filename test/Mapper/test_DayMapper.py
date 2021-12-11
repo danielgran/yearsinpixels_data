@@ -19,7 +19,7 @@ class DayMapperTest(unittest.TestCase):
     def test_metadata(self):
         self.assertIsNotNone(self.mapper.gateway)
         self.assertIsNotNone(self.mapper.add)
-        self.assertIsNotNone(self.mapper.find_all)
+        self.assertIsNotNone(self.mapper.find_all_from_user)
         self.assertIsNotNone(self.mapper.update)
         self.assertIsNotNone(self.mapper.remove)
 
@@ -42,7 +42,7 @@ class DayMapperTest(unittest.TestCase):
         self.mapper.gateway.items.append((user, day))
         self.mapper.gateway.items.append((user, day))
         criteria = MatchCriteria('guid', user.guid)
-        days_from_mapper = self.mapper.find_all(user, criteria)
+        days_from_mapper = self.mapper.find_all_from_user(user, criteria)
 
         self.assertEqual(len(days_from_mapper), 3)
 

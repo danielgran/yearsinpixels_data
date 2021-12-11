@@ -1,16 +1,24 @@
+import random
 import unittest
+import uuid
+from datetime import timedelta
 from hashlib import md5
 
+from yearsinpixels_business.Entity.Day import Day
 from yearsinpixels_business.Entity.Mood import Mood
+from yearsinpixels_business.Entity.User import User
 
 import test
 from yearsinpixels_data.Gateway.MySQLGateway import MySQLGateway
+from yearsinpixels_data.Mapper.DayMapper import DayMapper
 from yearsinpixels_data.Mapper.MoodMapper import MoodMapper
+from yearsinpixels_data.Mapper.UserMapper import UserMapper
+from yearsinpixels_data.QueryObject.Criteria.Criteria import Criteria
 
 
 @unittest.skipIf(test.disable_mysql_testcase,
                  "MySQL support will not work on this system. Use the 'yearsinpixels_data.Gateway.TestGateway' package.")
-class UserMapperWithMySQLGatewayTest(unittest.TestCase):
+class DayMapperWithMySQLGateway(unittest.TestCase):
     @staticmethod
     def hash_entity(entity):
         string = ""
@@ -21,19 +29,26 @@ class UserMapperWithMySQLGatewayTest(unittest.TestCase):
         return md5(bytes(string, encoding='utf8')).hexdigest()
 
     def setUp(self):
-        gateway = MySQLGateway(username='root', password='somepass', database='yearsinpixels')
-        gateway.connect()
-        self.moodmapper = MoodMapper(gateway)
+        self.gateway = MySQLGateway(username='root', password='somepass', database='yearsinpixels')
+        self.gateway.connect()
+        self.daymapper = DayMapper(self.gateway)
 
     def test_add_and_find_all(self):
+        user = User()
+        user.email = str(uuid.uuid4())
+        user_mapper = UserMapper(self.gateway)
+        user_mapper.add(user)
         mood = Mood()
+        moodMapper = MoodMapper(self.gateway)
+        moodMapper.add(mood)
+        day = Day()
+        day.date = day.date + timedelta(days=random.randint(0, 1000000))
+        day.id_mood1 = 1
+        day.id_user = 1
+        self.daymapper.add(day)
 
-        self.moodmapper.add(mood)
+        days_from_mapper = self.daymapper.find_all_from_user(user, Criteria.matches('id_user', 1))
 
-        moods_from_database = self.moodmapper.find_all()
-
-        local_mood_hash = self.hash_entity(mood)
-        for single_mood_from_database in moods_from_database:
-            if self.hash_entity(single_mood_from_database) == local_mood_hash:
-                return
-        self.fail()
+        for day in days_from_mapper:
+            if day.id_user != 1:
+                self.fail()
