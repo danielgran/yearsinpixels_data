@@ -1,4 +1,5 @@
 import unittest
+from datetime import date
 
 from yearsinpixels_business.Entity.Day import Day
 from yearsinpixels_business.Entity.User import User
@@ -27,9 +28,10 @@ class CreateQueryTest(unittest.TestCase):
 
     def test_sql_generation_with_hidden_id(self):
         day = Day()
+        day.date = date(2021, 12, 12)
         day.id_mood1 = 1
         day.id_mood2 = 0
         query = InsertQuery(day).generate_sql()
-        self.assertEqual(query, "INSERT INTO day (date, id_mood1, notes, title) VALUES ( '2021-12-11', '1', '', '');")
+        self.assertEqual(query, "INSERT INTO day (date, id_mood1, notes, title) VALUES ( '2021-12-12', '1', '', '');")
         print(query)
 
