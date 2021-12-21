@@ -24,6 +24,7 @@ class MySQLGateway(Gateway):
         try:
             self.connection = connect(user=self.username, password=self.password, host=self.host, port=self.port,
                                       database=self.database)
+            self.connection.autocommit = True
         except:
             raise
 
