@@ -31,7 +31,7 @@ class SelectQueryTest(unittest.TestCase):
             "SELECT created, email, email_verified, enabled, guid, id, login_last, modified, name_first, name_last, "
             "password, password_last_update, twofatoken "
             "FROM user "
-            "WHERE `guid` = 'some-random-guid' AND `name` = 'pete' AND `krawatte` = 'keine'",
+            "WHERE `guid` = %(guid)s AND `name` = %(name)s AND `krawatte` = %(krawatte)s",
             generated_sql)
 
     def test_without_criteria(self):

@@ -19,4 +19,4 @@ class MatchCriteriaTest(unittest.TestCase):
     def test_generate_sql(self):
         sql = self.criteria.generate_sql()
         self.assertTrue(isinstance(sql, str))
-        self.assertEqual(sql, "`field` = 'value'")
+        self.assertEqual(sql, "`field` = %(field)s")

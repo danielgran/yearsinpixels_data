@@ -41,27 +41,29 @@ class MySQLGateway(Gateway):
         self.connection.commit()
         cursor.close()
 
-    def read_entity(self, query_object) -> Entity:
-        query = query_object.generate_sql()
+    def read_entity(self, select_query) -> Entity:
+        query = select_query.generate_sql()
         cursor = self.connection.cursor(dictionary=True)
-        cursor.execute(query)
+        criteria_as_dict = {str(key.field): key.value for key in select_query.criteria}
+        cursor.execute(query, criteria_as_dict)
 
         entity_from_database = None
         for entity in cursor:
-            entity_from_database = self.read_single_entity_from_cursor_iteratable(entity, query_object.entity)
+            entity_from_database = self.read_single_entity_from_cursor_iteratable(entity, select_query.entity)
             break  # Only the first entity
 
         cursor.close()
         return entity_from_database
 
-    def read_all_entities(self, query_object) -> Entity:
-        query = query_object.generate_sql()
+    def read_all_entities(self, select_query) -> Entity:
+        query = select_query.generate_sql()
         cursor = self.connection.cursor(dictionary=True)
-        cursor.execute(query)
+        criteria_as_dict = {str(key.field): key.value for key in select_query.criteria}
+        cursor.execute(query, criteria_as_dict)
 
         entities_from_database = list()
         for entity in cursor:
-            entities_from_database.append(self.read_single_entity_from_cursor_iteratable(entity, query_object.entity))
+            entities_from_database.append(self.read_single_entity_from_cursor_iteratable(entity, select_query.entity))
         cursor.close()
 
         return entities_from_database
@@ -90,7 +92,8 @@ class MySQLGateway(Gateway):
         query = update_query.generate_sql()
 
         cursor = self.connection.cursor()
-        cursor.execute(query)
+        criteria_as_dict = {str(key.field): key.value for key in update_query.criteria}
+        cursor.execute(query, criteria_as_dict)
         self.connection.commit()
         cursor.close()
 

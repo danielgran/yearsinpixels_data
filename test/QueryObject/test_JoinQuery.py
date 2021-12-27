@@ -28,7 +28,7 @@ class JoinQueryTest(unittest.TestCase):
         joinquery = JoinQuery(User, Day)
         joinquery.add_criteria(Criteria.matches("guid", "some-guid"))
         generated_string = joinquery.generate_sql()
-        self.assertTrue(generated_string.endswith("'"))
+        self.assertTrue(generated_string.endswith("SELECT b.date, b.id_mood1, b.id_mood2, b.id_user, b.notes, b.title from user a JOIN day b ON b.id_user = a.id WHERE a.`guid` = %(guid)s"))
 
     def test_generate_sql_with_criteria_with_no_criteria(self):
         joinquery = JoinQuery(User, Day)
