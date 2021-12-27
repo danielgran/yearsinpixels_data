@@ -24,6 +24,12 @@ class MySQLGateway(Gateway):
         try:
             self.connection = connect(user=self.username, password=self.password, host=self.host, port=self.port,
                                       database=self.database)
+            cursor = self.connection.cursor()
+            cursor.execute('SET NAMES utf8mb4')
+            cursor.execute("SET CHARACTER SET utf8mb4")
+            cursor.execute("SET character_set_connection=utf8mb4")
+            self.connection.commit()
+            cursor.close()
             self.connection.autocommit = True
         except:
             raise
