@@ -37,7 +37,7 @@ class MySQLGateway(Gateway):
     def create_entity(self, entity):
         query = InsertQuery(entity).generate_sql()
         cursor = self.connection.cursor()
-        cursor.execute(query)
+        cursor.execute(query, vars(entity))
         self.connection.commit()
         cursor.close()
 

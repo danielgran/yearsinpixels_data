@@ -37,7 +37,7 @@ class InsertQuery(QueryObject):
             mysql_datatype = MySQLDatatypeMap().get_mysql_type(datapair.datatype)
             mysql_datatype = mysql_datatype()
             value = mysql_datatype.convert_to_database(value)
-            sql_code += f"'{value}', "
+            sql_code += f"%({datapair.field_name})s, "
 
         sql_code = sql_code[:len(sql_code) - 2]
         sql_code += ");"
