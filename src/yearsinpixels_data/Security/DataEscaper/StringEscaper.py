@@ -1,6 +1,7 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
 
 class StringEscaper(ABC):
-    def escape(self):
+    @abstractmethod
+    def escape(self, string):
         pass
