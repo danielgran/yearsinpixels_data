@@ -38,7 +38,7 @@ class MySQLConnection:
         if len(args) == 0:
             cursor.execute(query)
         else:
-            cursor.execute(query, args)
+            cursor.execute(query, *args)
         rows = list()
         for entity in cursor:
             rows.append(entity)

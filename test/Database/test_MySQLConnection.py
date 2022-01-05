@@ -49,5 +49,5 @@ class MySQLConnectionTest(unittest.TestCase):
 
     def test_query_with_variables(self):
         self.mysqlconnection.connect()
-        result = self.mysqlconnection.query("SELECT %s from mysql.user", "host")
+        result = self.mysqlconnection.query("SELECT %s from mysql.user", ("Host",))
         self.assertTrue(len(result) > 0)
