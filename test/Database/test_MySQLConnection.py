@@ -7,10 +7,13 @@ from yearsinpixels_data.Database.MySQLConnection import MySQLConnection
                  "MySQL support will not work on this system. Use the 'yearsinpixels_data.Gateway.TestGateway' package.")
 class MySQLConnectionTest(unittest.TestCase):
     def setUp(self):
-        self.mysqlconnection = MySQLConnection()
-        self.mysqlconnection.username = "root"
-        self.mysqlconnection.password = "somepass"
-        self.mysqlconnection.database = "yearsinpixels"
+        username = "root"
+        password = "somepass"
+        host = "localhost"
+        port = 3306
+        database = "yearsinpixels"
+        self.mysqlconnection = MySQLConnection(username=username, password=password, host=host, port=port, database=database)
+
 
     def test_is_there(self):
         self.assertIsNotNone(MySQLConnection)

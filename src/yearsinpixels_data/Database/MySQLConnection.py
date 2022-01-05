@@ -2,14 +2,15 @@ from mysql.connector import connect
 
 
 class MySQLConnection:
-    def __init__(self):
-        self.connected = False
-        self.password = ""
-        self.host = "localhost"
-        self.port = 3306
-        self.database = ""
-        self.username = ""
+    def __init__(self, host="localhost", port=3306, database="", username="", password=""):
+        self.host = host
+        self.port = port
+        self.database = database
+        self.username = username
+        self.password = password
+
         self.connection = None
+        self.connected = False
 
     def connect(self):
         self.connection = connect(user=self.username, password=self.password, host=self.host, port=self.port,
