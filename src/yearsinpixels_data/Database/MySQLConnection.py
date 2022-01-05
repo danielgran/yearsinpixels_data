@@ -32,3 +32,14 @@ class MySQLConnection:
         if self.connection.connection_id is None:
             return False
         return True
+
+    def query(self, query):
+        cursor = self.connection.cursor()
+        cursor.execute(query)
+        rows = list()
+        for entity in cursor:
+            rows.append(entity)
+        cursor.close()
+        self.connection.commit()
+        return rows
+

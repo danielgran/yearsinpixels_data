@@ -40,5 +40,11 @@ class MySQLConnectionTest(unittest.TestCase):
         self.mysqlconnection.connection.cmd_quit()
         self.assertTrue(self.mysqlconnection.is_connected == False)
 
+    def test_query_without_variables(self):
+        self.mysqlconnection.connect()
+        result = self.mysqlconnection.query("SHOW PROCESSLIST")
+
+        self.assertTrue(len(result) > 0)
+
 
 
