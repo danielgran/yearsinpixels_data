@@ -9,6 +9,7 @@ from yearsinpixels_business.Entity.Mood import Mood
 from yearsinpixels_business.Entity.User import User
 
 import test
+from yearsinpixels_data.Database.MySQLConnection import MySQLConnection
 from yearsinpixels_data.Gateway.MySQLGateway import MySQLGateway
 from yearsinpixels_data.Mapper.DayMapper import DayMapper
 from yearsinpixels_data.Mapper.MoodMapper import MoodMapper
@@ -29,8 +30,14 @@ class DayMapperWithMySQLGateway(unittest.TestCase):
         return md5(bytes(string, encoding='utf8')).hexdigest()
 
     def setUp(self):
-        self.gateway = MySQLGateway(username='root', password='somepass', database='yearsinpixels')
-        self.gateway.connect()
+        username = "root"
+        password = "somepass"
+        host = "localhost"
+        port = 3306
+        database = "yearsinpixels"
+        mysqlconnection = MySQLConnection(username=username, password=password, host=host, port=port, database=database)
+        mysqlconnection.connect()
+        self.gateway = MySQLGateway(mysqlconnection)
         self.daymapper = DayMapper(self.gateway)
 
     def test_add_and_find_all(self):

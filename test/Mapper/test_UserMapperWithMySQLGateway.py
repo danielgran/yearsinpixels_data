@@ -6,6 +6,7 @@ from hashlib import md5
 from yearsinpixels_business.Entity.User import User
 
 import test
+from yearsinpixels_data.Database.MySQLConnection import MySQLConnection
 from yearsinpixels_data.Gateway.MySQLGateway import MySQLGateway
 from yearsinpixels_data.Mapper.UserMapper import UserMapper
 from yearsinpixels_data.QueryObject.Criteria.Criteria import Criteria
@@ -24,8 +25,14 @@ class UserMapperWithMySQLGatewayTest(unittest.TestCase):
         return md5(bytes(string, encoding='utf8')).hexdigest()
 
     def setUp(self):
-        gateway = MySQLGateway(username='root', password='somepass', database='yearsinpixels')
-        gateway.connect()
+        username = "root"
+        password = "somepass"
+        host = "localhost"
+        port = 3306
+        database = "yearsinpixels"
+        mysqlconnection = MySQLConnection(username=username, password=password, host=host, port=port, database=database)
+        mysqlconnection.connect()
+        gateway = MySQLGateway(mysqlconnection)
         self.usermapper = UserMapper(gateway)
 
     def test_interaction(self):

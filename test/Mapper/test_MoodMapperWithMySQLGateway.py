@@ -4,13 +4,14 @@ from hashlib import md5
 from yearsinpixels_business.Entity.Mood import Mood
 
 import test
+from yearsinpixels_data.Database.MySQLConnection import MySQLConnection
 from yearsinpixels_data.Gateway.MySQLGateway import MySQLGateway
 from yearsinpixels_data.Mapper.MoodMapper import MoodMapper
 
 
 @unittest.skipIf(test.disable_mysql_testcase,
                  "MySQL support will not work on this system. Use the 'yearsinpixels_data.Gateway.TestGateway' package.")
-class DayMapperWithMySQLGatewayTest(unittest.TestCase):
+class MoodMapperWithMySQLGatewayTest(unittest.TestCase):
     @staticmethod
     def hash_entity(entity):
         string = ""
@@ -21,16 +22,22 @@ class DayMapperWithMySQLGatewayTest(unittest.TestCase):
         return md5(bytes(string, encoding='utf8')).hexdigest()
 
     def setUp(self):
-        gateway = MySQLGateway(username='root', password='somepass', database='yearsinpixels')
-        gateway.connect()
-        self.daymapper = MoodMapper(gateway)
+        username = "root"
+        password = "somepass"
+        host = "localhost"
+        port = 3306
+        database = "yearsinpixels"
+        mysqlconnection = MySQLConnection(username=username, password=password, host=host, port=port, database=database)
+        mysqlconnection.connect()
+        gateway = MySQLGateway(mysqlconnection)
+        self.moodmapper = MoodMapper(gateway)
 
     def test_add_and_find_all(self):
         mood = Mood()
 
-        self.daymapper.add(mood)
+        self.moodmapper.add(mood)
 
-        moods_from_database = self.daymapper.find_all()
+        moods_from_database = self.moodmapper.find_all()
 
         local_mood_hash = self.hash_entity(mood)
         for single_mood_from_database in moods_from_database:
