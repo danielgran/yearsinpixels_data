@@ -69,12 +69,9 @@ class MySQLGateway(Gateway):
         update_query.set_update_object(entity)
 
         query = update_query.generate_sql()
-
-        cursor = self.connection.cursor()
         criteria_as_dict = {str(key.field): key.value for key in update_query.criteria}
-        cursor.execute(query, criteria_as_dict)
-        self.connection.commit()
-        cursor.close()
+
+        self.connection.query(query, criteria_as_dict)
 
     def delete_entity(self, entity):
         pass
