@@ -8,6 +8,7 @@ from yearsinpixels_business.Entity.Mood import Mood
 from yearsinpixels_business.Entity.User import User
 
 import test
+from yearsinpixels_data.Database.MySQLConnection import MySQLConnection
 from yearsinpixels_data.Gateway.Gateway import Gateway
 from yearsinpixels_data.Gateway.MySQLGateway import MySQLGateway
 from yearsinpixels_data.QueryObject.Criteria.Criteria import Criteria
@@ -36,8 +37,9 @@ class MySQLGatewayTest(unittest.TestCase):
         host = "localhost"
         port = 3306
         database = "yearsinpixels"
-        self.gateway = MySQLGateway(username=username, password=password, host=host, port=port, database=database)
-        self.gateway.connect()
+        mysqlconnection = MySQLConnection(username=username, password=password, host=host, port=port, database=database)
+        mysqlconnection.connect()
+        self.gateway = MySQLGateway(mysqlconnection)
 
     def test_is_there(self):
         self.assertIsNotNone(MySQLGateway)

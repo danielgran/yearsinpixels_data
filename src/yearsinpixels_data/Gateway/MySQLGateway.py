@@ -10,15 +10,8 @@ from yearsinpixels_data.QueryObject.UpdateQuery import UpdateQuery
 
 
 class MySQLGateway(Gateway):
-    def __init__(self, username='', password='', host='', port=3306, database=None):
-        assert database is not None
-        self.username = username
-        self.password = password
-        self.host = host
-        self.port = port
-        self.database = database
-
-        self.connection = None
+    def __init__(self, mysqlconnection):
+        self.connection = mysqlconnection
 
     def connect(self):
         try:
@@ -42,10 +35,7 @@ class MySQLGateway(Gateway):
 
     def create_entity(self, entity):
         query = InsertQuery(entity).generate_sql()
-        cursor = self.connection.cursor()
-        cursor.execute(query, vars(entity))
-        self.connection.commit()
-        cursor.close()
+        self.connection.query(query, vars(entity))
 
     def read_entity(self, select_query) -> Entity:
         query = select_query.generate_sql()
