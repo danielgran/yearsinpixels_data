@@ -1,4 +1,5 @@
-from mysql.connector import connect
+from typing import List
+
 from yearsinpixels_business.Entity.Entity import Entity
 
 from yearsinpixels_data.EntityMap.ConcreteEntityMapFactory import ConcreteEntityMapFactory
@@ -12,20 +13,6 @@ from yearsinpixels_data.QueryObject.UpdateQuery import UpdateQuery
 class MySQLGateway(Gateway):
     def __init__(self, mysqlconnection):
         self.connection = mysqlconnection
-
-    def connect(self):
-        try:
-            self.connection = connect(user=self.username, password=self.password, host=self.host, port=self.port,
-                                      database=self.database)
-            cursor = self.connection.cursor()
-            cursor.execute("SET NAMES utf8mb4")
-            cursor.execute("SET CHARACTER SET utf8mb4")
-            cursor.execute("SET character_set_connection=utf8mb4")
-            self.connection.commit()
-            cursor.close()
-            self.connection.autocommit = True
-        except:
-            raise
 
     def disconnect(self):
         try:
@@ -49,16 +36,14 @@ class MySQLGateway(Gateway):
 
         return entity_from_database
 
-    def read_all_entities(self, select_query) -> Entity:
+    def read_all_entities(self, select_query) -> List[Entity]:
         query = select_query.generate_sql()
-        cursor = self.connection.cursor(dictionary=True)
         criteria_as_dict = {str(key.field): key.value for key in select_query.criteria}
-        cursor.execute(query, criteria_as_dict)
+        cursor = self.connection.query(query, criteria_as_dict)
 
         entities_from_database = list()
         for entity in cursor:
             entities_from_database.append(self.read_single_entity_from_cursor_iteratable(entity, select_query.entity))
-        cursor.close()
 
         return entities_from_database
 

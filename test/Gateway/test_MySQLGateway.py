@@ -47,9 +47,6 @@ class MySQLGatewayTest(unittest.TestCase):
     def test_is_gateway(self):
         self.assertTrue(issubclass(MySQLGateway, Gateway))
 
-    def test_disconnect(self):
-        self.gateway.disconnect()
-
     def test_create_entity(self):
         user = User()
         user.email = str(uuid.uuid4())
