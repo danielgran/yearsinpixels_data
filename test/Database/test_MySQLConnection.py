@@ -51,3 +51,9 @@ class MySQLConnectionTest(unittest.TestCase):
         self.mysqlconnection.connect()
         result = self.mysqlconnection.query("SELECT %s from mysql.user", ("Host",))
         self.assertTrue(len(result) > 0)
+
+    def test_query_with_closed_connection(self):
+        self.mysqlconnection.connect()
+        self.mysqlconnection.connection.cmd_quit()
+        result = self.mysqlconnection.query("SELECT %s from mysql.user", ("Host",))
+        self.assertTrue(len(result) > 0)

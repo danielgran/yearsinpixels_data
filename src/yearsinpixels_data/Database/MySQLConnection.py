@@ -34,6 +34,8 @@ class MySQLConnection:
         return True
 
     def query(self, query, *args):
+        if not self.is_connected:
+            self.connect()
         cursor = self.connection.cursor(dictionary=True)
         if len(args) == 0:
             cursor.execute(query)
