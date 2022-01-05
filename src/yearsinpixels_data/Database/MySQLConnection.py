@@ -33,9 +33,9 @@ class MySQLConnection:
             return False
         return True
 
-    def query(self, query):
+    def query(self, query, *args):
         cursor = self.connection.cursor()
-        cursor.execute(query)
+        cursor.execute(query, args)
         rows = list()
         for entity in cursor:
             rows.append(entity)

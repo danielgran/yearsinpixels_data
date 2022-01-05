@@ -3,6 +3,7 @@ import unittest
 import test
 from yearsinpixels_data.Database.MySQLConnection import MySQLConnection
 
+
 @unittest.skipIf(test.disable_mysql_testcase,
                  "MySQL support will not work on this system. Use the 'yearsinpixels_data.Gateway.TestGateway' package.")
 class MySQLConnectionTest(unittest.TestCase):
@@ -12,8 +13,8 @@ class MySQLConnectionTest(unittest.TestCase):
         host = "localhost"
         port = 3306
         database = "yearsinpixels"
-        self.mysqlconnection = MySQLConnection(username=username, password=password, host=host, port=port, database=database)
-
+        self.mysqlconnection = MySQLConnection(username=username, password=password, host=host, port=port,
+                                               database=database)
 
     def test_is_there(self):
         self.assertIsNotNone(MySQLConnection)
@@ -46,5 +47,7 @@ class MySQLConnectionTest(unittest.TestCase):
 
         self.assertTrue(len(result) > 0)
 
-
-
+    def test_query_with_variables(self):
+        self.mysqlconnection.connect()
+        result = self.mysqlconnection.query("SELECT %s from mysql.user", "host")
+        self.assertTrue(len(result) > 0)
