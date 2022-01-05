@@ -34,7 +34,7 @@ class MySQLConnection:
         return True
 
     def query(self, query, *args):
-        cursor = self.connection.cursor()
+        cursor = self.connection.cursor(dictionary=True)
         if len(args) == 0:
             cursor.execute(query)
         else:
@@ -45,4 +45,3 @@ class MySQLConnection:
         cursor.close()
         self.connection.commit()
         return rows
-
