@@ -39,16 +39,14 @@ class MySQLGateway(Gateway):
 
     def read_entity(self, select_query) -> Entity:
         query = select_query.generate_sql()
-        cursor = self.connection.cursor(dictionary=True)
         criteria_as_dict = {str(key.field): key.value for key in select_query.criteria}
-        cursor.execute(query, criteria_as_dict)
+        cursor = self.connection.query(query, criteria_as_dict)
 
         entity_from_database = None
         for entity in cursor:
             entity_from_database = self.read_single_entity_from_cursor_iteratable(entity, select_query.entity)
             break  # Only the first entity
 
-        cursor.close()
         return entity_from_database
 
     def read_all_entities(self, select_query) -> Entity:
