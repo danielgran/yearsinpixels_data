@@ -29,9 +29,7 @@ class MySQLConnection:
 
     @property
     def is_connected(self):
-        if self.connection.connection_id is None:
-            return False
-        return True
+        return self.connection.is_connected()
 
     def query(self, query, *args):
         if not self.is_connected:
